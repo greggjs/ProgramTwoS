@@ -191,6 +191,7 @@ public class BookFrame extends JFrame{
 			}
 			else if (e.getSource() == searchByAuthor) {
 				ArrayList<Author> authors = new ArrayList<Author>(); //Creating an ArrayList of Authors
+				ArrayList<Book> authorsBooks = new ArrayList<Book>(); //Creating an ArrayList for each of the authors found of the books they wrote
 				String fName = authorFirstName.getText(); //Getting string from textfield
 				fName = fName.replace("'", ""); //Remove all apostrophes 
 				String mName = authorMiddleName.getText(); //Getting string from textfield
@@ -201,28 +202,27 @@ public class BookFrame extends JFrame{
 				for(int i = 0; i < authors.size(); i++) { //Iterating through each author found to match name
 					System.out.println(authors.get(i).toString());  //Printing the name and birthdate of each author found
 					System.out.println("Wrote: ");
-					ArrayList<Book> authorsBooks = new ArrayList<Book>(); //Creating an ArrayList for each of the authors found of the books they wrote
 					authorsBooks = bookSearch.getAuthorsBooks(authors.get(i).authorID); //Getting the books from the Author, populating ArrayList
-					for(int j = 0; i < authorsBooks.size(); i++) { //Iterating through ArrayList of author's books
-						System.out.println("\t" + authorsBooks.get(i).toString()); //Displaying the books written by the author
+					for(int j = 0; j < authorsBooks.size(); j++) { //Iterating through ArrayList of author's books
+						System.out.println("\t" + authorsBooks.get(j).toString()); //Displaying the books written by the author
 					}
-					
+					authorsBooks.clear();
 				}
 			}
 			else if (e.getSource() == searchByTitle) {
 				ArrayList<Book> books = new ArrayList<Book>(); //Creating an ArrayList of Books
+				ArrayList<Author> booksAuthors = new ArrayList<Author>(); //Creating an ArrayList for each of the books found of the authors that wrote them
 				String title = bookTitle.getText(); //Getting string from textfield
 				title = title.replace("'", ""); //Remove all apostrophes 
 				books = bookSearch.searchBook(title); //Populating arraylist with books that match title given
 				for(int i = 0; i < books.size(); i++) { //Iterating through each book found to match title
 					System.out.println(books.get(i).toString());  //Printing the title and publish date of each author found
 					System.out.println("Written by: ");
-					ArrayList<Author> booksAuthors = new ArrayList<Author>(); //Creating an ArrayList for each of the books found of the authors that wrote them
 					booksAuthors = bookSearch.getBookAuthors(books.get(i).bookID); //Getting the authors from the book, populating ArrayList
-					for(int j = 0; i < booksAuthors.size(); i++) { //Iterating through ArrayList of book's authors
-						System.out.println("\t" + booksAuthors.get(i).toString()); //Displaying the authors that wrote the book
+					for(int j = 0; j < booksAuthors.size(); j++) { //Iterating through ArrayList of book's authors
+						System.out.println("\t" + booksAuthors.get(j).toString()); //Displaying the authors that wrote the book
 					}
-					
+					booksAuthors.clear();
 				}
 			}
 			else if (e.getSource() == removeBook) {

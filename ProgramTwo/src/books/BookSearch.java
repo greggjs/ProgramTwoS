@@ -27,7 +27,7 @@ public class BookSearch {
 	public void addBook(String title, int pDay, int pMonth, int pYear) {
 		try {
 			stat.execute("INSERT INTO BOOK VALUES ('" + title +
-					"', " + pDay + ", '" + pMonth + ", " +
+					"', " + pDay + ", " + pMonth + ", " +
 					pYear + ", NULL);");
 		} catch (SQLException e) {
 			System.out.println("Database has too many Books. Autoincrement has reached the highest possible integer.");
@@ -38,7 +38,7 @@ public class BookSearch {
 	public void addAuthor(String fName, String mName, String lName, int bDay, int bMonth, int bYear) {
 		try {
 			stat.execute("INSERT INTO AUTHOR VALUES ('" + fName +
-					"', '" + mName + "', '" + lName + "', " + bDay + ", '" + bMonth + ", " +
+					"', '" + mName + "', '" + lName + "', " + bDay + ", " + bMonth + ", " +
 					bYear + ", NULL);");
 		} catch (SQLException e) {
 			System.out.println("Database has too many Authors. Autoincrement has reached the highest possible integer.");
@@ -51,7 +51,7 @@ public class BookSearch {
 		ArrayList<Author> authors = new ArrayList<Author>();
 		try {
 		rs = stat.executeQuery("SELECT FROM AUTHOR WHERE (fname = '" + fName + "')" +
-				"AND (mName = '" + mName + "') AND (lName = '" + lName + "');");
+				" AND (mName = '" + mName + "') AND (lName = '" + lName + "');");
 		while (rs.next()) {
 			authors.add(new Author(rs));
 		}
