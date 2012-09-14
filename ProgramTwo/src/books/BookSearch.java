@@ -21,6 +21,40 @@ public class BookSearch {
 		stat = conn.createStatement();
 		stat.execute("PRAGMA foreign_keys = ON;");
 	}
+	
+	public boolean checkDate(int day, int month, int year) {
+		if(year >= 2013 ) { //Can't have a future date
+			return false;
+		}
+		if(month > 12 || month < 1) { //Months must be real
+			return false;
+		}
+		if(day < 1) { //Days must be positive
+			return false;
+		}
+		if(month == 1 || month == 3 || month ==5 || month == 7 || month == 8 || month == 10 || month == 12) { //Months with 31 days
+			if(day > 31) {
+				return false;
+			}
+		}
+		if(month == 4 || month == 6 || month ==9 || month == 11) { //Months with 30 days
+			if(day > 30) {
+				return false;
+			}
+		}
+		if(year % 4 != 0 || year % 100 == 0) { //Check if it is not a leap year
+			if(month == 2 && day > 28) {
+				return false;
+			}
+		}
+		if(year % 4 == 0) { //Check if it is a leap year.
+			if(month == 2 && day >29) {
+				return false;
+			}
+		}
+		return true;
+		
+	}
 
 
 	//Adds a Book to the database with the following parameters as values for its attributes

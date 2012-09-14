@@ -159,11 +159,16 @@ public class BookFrame extends JFrame{
 					String title = bookTitle.getText(); //Getting string from textfield
 					title = title.replace("'", ""); //removing apostrophe's cause they tear this shit up
 
-					int pDay = Integer.parseInt(bookPubDay.getText()); //Come up with a way to check that these values are real 0<pDay<31
-					int pMonth = Integer.parseInt(bookPubMonth.getText()); //0<pMonth<12
-					int pYear = Integer.parseInt(bookPubYear.getText()); //pYear<2013
+					int pDay = Integer.parseInt(bookPubDay.getText());
+					int pMonth = Integer.parseInt(bookPubMonth.getText());
+					int pYear = Integer.parseInt(bookPubYear.getText());
 
-					bookSearch.addBook(title, pDay, pMonth, pYear);
+					if (bookSearch.checkDate(pDay, pMonth, pYear)) {
+						bookSearch.addBook(title, pDay, pMonth, pYear);	
+					}
+					else {
+						System.out.println("Please enter a real past date");
+					}
 
 				} catch(NumberFormatException err) {
 					System.out.println("Please  only input integers for day, month, and year."); //Wherever we should output this message, probably not console
@@ -178,11 +183,16 @@ public class BookFrame extends JFrame{
 					mName = mName.replace("'", ""); //Remove all apostrophes
 					String lName = authorLastName.getText(); //Getting string from textfield
 					lName = lName.replace("'", ""); //Remove all apostrophes
-					int bDay = Integer.parseInt(authorBDay.getText()); //0<pDay<31 or whatever depending on year/month
-					int bMonth = Integer.parseInt(authorBMonth.getText()); //0<pMonth<12
-					int bYear = Integer.parseInt(authorBYear.getText()); //pYear<2013
+					int bDay = Integer.parseInt(authorBDay.getText()); 
+					int bMonth = Integer.parseInt(authorBMonth.getText()); 
+					int bYear = Integer.parseInt(authorBYear.getText()); 
 
-					bookSearch.addAuthor(fName, mName, lName, bDay, bMonth, bYear);
+					if (bookSearch.checkDate(bDay, bMonth, bYear)) {
+						bookSearch.addAuthor(fName, mName, lName, bDay, bMonth, bYear);
+					}
+					else {
+						System.out.println("Please enter a real past date");
+					}
 
 				} catch (NumberFormatException err) {
 					System.out.println("Please  only input integers for day, month, and year."); //Wherever we should output this message, probably not console

@@ -50,7 +50,7 @@ public class Book implements Comparable<Book>	{
 	 * @return Formated string
 	 */
 	public String toString()	{
-		return "Title: " + title + " -- Published: " + getPublishDate();
+		return "Title: " + title + " -- Published (M-D-Y): " + getPublishDate();
 	}
 
 	/**
