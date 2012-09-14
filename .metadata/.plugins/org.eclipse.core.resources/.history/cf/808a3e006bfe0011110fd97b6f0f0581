@@ -1,0 +1,61 @@
+package books;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class BookFrame extends JFrame{
+	
+	JPanel myPanel;
+	JPanel buttonPanel;
+	JButton search;
+	JButton clearForm;
+	JTextField bookTitle;
+	JTextField authorName;
+	
+	public BookFrame() {
+		
+		super("Book & Author Search");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(new BorderLayout());
+		setBounds(200, 200, 600, 600);
+		
+		myPanel = new JPanel(new GridLayout(2,2));
+		JLabel label1 = new JLabel("Book Title");
+		JLabel label2 = new JLabel("Author Name");
+		bookTitle = new JTextField();
+		authorName = new JTextField();
+		myPanel.add(label1);
+		myPanel.add(label2);
+		myPanel.add(bookTitle);
+		myPanel.add(authorName);
+		
+		buttonPanel = new JPanel(new GridLayout());
+		search = new JButton("Search");
+		clearForm = new JButton("Clear Form");
+		buttonPanel.add(search);
+		buttonPanel.add(clearForm);
+		
+		this.add(buttonPanel, BorderLayout.SOUTH);
+		this.add(myPanel, BorderLayout.CENTER);
+		
+		Click button = new Click();
+		search.addActionListener(button);
+		clearForm.addActionListener(button);
+		
+		setVisible(true);
+	}
+	
+	public class Click implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == search) {
+				
+			}
+		}
+	}
+	
+	public static void main(String[] args) {
+		BookFrame myFrame = new BookFrame();
+	}
+}

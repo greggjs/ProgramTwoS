@@ -1,0 +1,16 @@
+package books;
+import javax.swing.*;
+import java.awt.*;
+
+public class BookFrame extends JFrame {
+
+	JPanel myPanel;
+	JFrame myFrame;
+	
+	public BookPanel() {
+		myFrame = new JFrame();
+		myPanel = new JPanel();
+		
+	}
+
+}

@@ -1,0 +1,98 @@
+package books;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class BookFrame extends JFrame{
+	
+	JPanel searchPanel;
+	JPanel buttonPanel;
+	JButton search;
+	JButton clearForm;
+	JButton addBook;
+	JButton addAuthor;
+	JButton searchByAuthor;
+	JButton searchByTitle;
+	JButton removeBook;
+	JButton searchByKeyword;
+	JButton modifyBook;
+	JButton modifyAuthor;
+	JTextField bookTitle;
+	JTextField authorName;
+	
+	public BookFrame() {
+		
+		super("Book & Author Search");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(new BorderLayout());
+		setBounds(200, 200, 600, 600);
+		
+		/*
+		searchPanel = new JPanel(new GridLayout(2,2));
+		JLabel label1 = new JLabel("Book Title");
+		JLabel label2 = new JLabel("Author Name");
+		bookTitle = new JTextField();
+		authorName = new JTextField();
+		searchPanel.add(label1);
+		searchPanel.add(label2);
+		searchPanel.add(bookTitle);
+		searchPanel.add(authorName);
+		*/
+		
+		// initialize all buttons
+		buttonPanel = new JPanel(new GridLayout(3, 3));
+		clearForm = new JButton("Clear Form");
+		addBook = new JButton("Add Book");
+		addAuthor = new JButton("Add Author");
+		searchByAuthor = new JButton("Search by Author");
+		searchByTitle = new JButton("Search by Title");
+		removeBook = new JButton("Remove Book");
+		searchByKeyword = new JButton("Search by Keyword");
+		modifyBook = new JButton("Modify Book...");
+		modifyAuthor = new JButton("Modify Author...");
+		
+		// add buttons to panel
+		buttonPanel.add(addBook);
+		buttonPanel.add(addAuthor);
+		buttonPanel.add(searchByAuthor);
+		buttonPanel.add(searchByTitle);
+		buttonPanel.add(removeBook);
+		buttonPanel.add(searchByKeyword);
+		buttonPanel.add(modifyBook);
+		buttonPanel.add(modifyAuthor);
+		buttonPanel.add(clearForm);
+		
+		// add the panel to the frame
+		this.add(buttonPanel, BorderLayout.CENTER);
+		
+		Click button = new Click();
+		clearForm.addActionListener(button);
+		addBook.addActionListener(button);
+		addAuthor.addActionListener(button);
+		searchByAuthor.addActionListener(button);
+		searchByTitle.addActionListener(button);
+		removeBook.addActionListener(button);
+		searchByKeyword.addActionListener(button);
+		modifyBook.addActionListener(button);
+		modifyAuthor.addActionListener(button);
+		
+		setVisible(true);
+	}
+	
+	public class Click implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == search) {
+				
+			}
+			else if (e.getSource() == clearForm) {
+				
+			}
+		}
+	}
+	
+	public static void main(String[] args) {
+		BookFrame myFrame = new BookFrame();
+	}
+}

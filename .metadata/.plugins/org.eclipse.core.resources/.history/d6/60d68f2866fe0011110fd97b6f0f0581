@@ -1,0 +1,12 @@
+package books;
+
+public class BookPanel {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		
+	}
+
+}

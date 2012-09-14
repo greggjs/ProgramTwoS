@@ -1,0 +1,44 @@
+package books;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class BookFrame extends JFrame{
+	
+	JPanel myPanel;
+	JButton search;
+	JButton clearForm;
+	
+	public BookFrame() {
+		
+		super("Book & Author Search");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(new BorderLayout());
+		setBounds(200, 200, 600, 600);
+		
+		search = new JButton("search");
+		clearForm = new JButton("clear form");
+		add(search);
+		add(clearForm);
+		
+		Click button = new Click();
+		search.addActionListener(button);
+		clearForm.addActionListener(button);
+		
+		setVisible(true);
+	}
+	
+	public class Click implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == search) {
+				
+			}
+		}
+	}
+	
+	public static void main(String[] args) {
+		BookFrame myFrame = new BookFrame();
+	}
+}
