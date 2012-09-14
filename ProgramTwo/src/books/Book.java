@@ -13,7 +13,7 @@ public class Book implements Comparable<Book>	{
 
 	private String title;
 	private int pMonth, pDay, pYear;
-	private int bookID;
+	public int bookID;
 
 	/**
 	 * Creates an object of type Book
