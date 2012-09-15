@@ -181,8 +181,5 @@ public class BookFrame extends JFrame{
 		}
 		
 	}
-	
-	public static void main(String[] args) {
-		BookFrame myFrame = new BookFrame();
-	}
+
 }

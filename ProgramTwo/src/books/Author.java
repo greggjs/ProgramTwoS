@@ -4,14 +4,14 @@ import java.sql.*;
 
 public class Author implements Comparable<Author>	{
 
-	private static final String
-	SQL_FIRST_NAME = "fName",
-	SQL_MID_NAME = "mName",
-	SQL_LAST_NAME = "lName",
-	SQL_BIRTH_MONTH = "bMonth",
-	SQL_BIRTH_DAY = "bDay",
-	SQL_BIRTH_YEAR = "bYear",
-	SQL_AUTHOR_ID = "authorID";
+	public static final String
+		FIRST_NAME = "fName",
+		MID_NAME = "mName",
+		LAST_NAME = "lName",
+		BIRTH_MONTH = "bMonth",
+		BIRTH_DAY = "bDay",
+		BIRTH_YEAR = "bYear",
+		AUTHOR_ID = "authorID";
 
 	private String fName, mName, lName;
 	private int bMonth, bDay, bYear;
@@ -23,13 +23,13 @@ public class Author implements Comparable<Author>	{
 	 * @throws SQLException May result from the ResultSet not containing an entry for Author
 	 */
 	public Author(ResultSet rs) throws SQLException	{
-		fName = rs.getString(SQL_FIRST_NAME);
-		mName = rs.getString(SQL_MID_NAME);
-		lName = rs.getString(SQL_LAST_NAME);
-		bDay = rs.getInt(SQL_BIRTH_DAY);
-		bMonth = rs.getInt(SQL_BIRTH_MONTH);
-		bYear = rs.getInt(SQL_BIRTH_YEAR);
-		authorID = rs.getInt(SQL_AUTHOR_ID);
+		fName = rs.getString(FIRST_NAME);
+		mName = rs.getString(MID_NAME);
+		lName = rs.getString(LAST_NAME);
+		bDay = rs.getInt(BIRTH_DAY);
+		bMonth = rs.getInt(BIRTH_MONTH);
+		bYear = rs.getInt(BIRTH_YEAR);
+		authorID = rs.getInt(AUTHOR_ID);
 	}
 
 	/**

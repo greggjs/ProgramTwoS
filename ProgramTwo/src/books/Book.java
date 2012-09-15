@@ -4,12 +4,12 @@ import java.sql.*;
 
 public class Book implements Comparable<Book>	{
 
-	private static final String
-	SQL_TITLE = "title",
-	SQL_PUBLISH_MONTH = "pMonth",
-	SQL_PUBLISH_DAY = "pDay",
-	SQL_PUBLISH_YEAR = "pYear",
-	SQL_BOOK_ID = "bookID";
+	public static final String
+		TITLE = "title",
+		PUBLISH_MONTH = "pMonth",
+		PUBLISH_DAY = "pDay",
+		PUBLISH_YEAR = "pYear",
+		BOOK_ID = "bookID";
 
 	private String title;
 	private int pMonth, pDay, pYear;
@@ -21,11 +21,11 @@ public class Book implements Comparable<Book>	{
 	 * @throws SQLException May result from the ResultSet not containing an entry for Book
 	 */
 	public Book(ResultSet rs) throws SQLException	{
-		title = rs.getString(SQL_TITLE);
-		pDay = rs.getInt(SQL_PUBLISH_DAY);
-		pMonth = rs.getInt(SQL_PUBLISH_MONTH);
-		pYear = rs.getInt(SQL_PUBLISH_YEAR);
-		bookID = rs.getInt(SQL_BOOK_ID);
+		title = rs.getString(TITLE);
+		pDay = rs.getInt(PUBLISH_DAY);
+		pMonth = rs.getInt(PUBLISH_MONTH);
+		pYear = rs.getInt(PUBLISH_YEAR);
+		bookID = rs.getInt(BOOK_ID);
 	}
 
 	/**
@@ -38,7 +38,7 @@ public class Book implements Comparable<Book>	{
 
 	/**
 	 * Formats author information to be used for an SQL entry. does not include parentheses
-	 * Includes NULL for autoincrementing primary key bookID
+	 * Includes NULL for automatically incrementing primary key bookID
 	 * @return String formated for SQL use
 	 */
 	public String toSQLString()	{
