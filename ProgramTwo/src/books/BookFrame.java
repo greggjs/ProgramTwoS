@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
 
 public class BookFrame extends JFrame{
 	
@@ -129,9 +130,9 @@ public class BookFrame extends JFrame{
 		authorPanel.add(authorLabel1); // first, middle, last name
 		authorLabel1.setBounds(10, 35, 200, 25);
 		authorPanel.add(authorLabel2);
-		authorLabel2.setBounds(150, 35, 200, 25);
+		authorLabel2.setBounds(155, 35, 200, 25);
 		authorPanel.add(authorLabel3);
-		authorLabel3.setBounds(260, 35, 200, 25);
+		authorLabel3.setBounds(265, 35, 200, 25);
 		authorPanel.add(authorFirstName); 
 		authorFirstName.setBounds(8, 60, 125, 25);
 		authorPanel.add(authorMiddleName);
@@ -142,9 +143,9 @@ public class BookFrame extends JFrame{
 		authorPanel.add(authorLabel4); // birth day, month, year
 		authorLabel4.setBounds(10, 85, 200, 25);
 		authorPanel.add(authorLabel5);
-		authorLabel5.setBounds(100, 85, 200, 25);
+		authorLabel5.setBounds(110, 85, 200, 25);
 		authorPanel.add(authorLabel6);
-		authorLabel6.setBounds(200, 85, 200, 25);
+		authorLabel6.setBounds(210, 85, 200, 25);
 		authorPanel.add(authorBDay);
 		authorBDay.setBounds(8, 110, 75, 25);
 		authorPanel.add(authorBMonth);
@@ -213,28 +214,82 @@ public class BookFrame extends JFrame{
 
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == addBook) {
-				if (bookTitle.getText().equals(""))
-					JOptionPane.showMessageDialog(null,
-							"Input a book title", "No Book Title"
-							, JOptionPane.INFORMATION_MESSAGE);
-				else if (bookPubDay.getText().equals("") || 
-						bookPubMonth.getText().equals("") ||
-						bookPubYear.getText().equals(""))
-					JOptionPane.showMessageDialog(null,
-							"Input a publish date", "No Publish Day"
-							, JOptionPane.INFORMATION_MESSAGE);
-				else if (Integer.parseInt(bookPubDay.getText())<0 
-						|| Integer.parseInt(bookPubDay.getText()) >32
-						|| Integer.parseInt(bookPubMonth.getText())<0
-						|| Integer.parseInt(bookPubMonth.getText())>12
-						|| Integer.parseInt(bookPubYear.getText())<0
-						|| Integer.parseInt(bookPubYear.getText())>2012)
-					JOptionPane.showMessageDialog(null,
-							"Input a correct publish date", "Incorrect Publish Day"
-							, JOptionPane.INFORMATION_MESSAGE);
+				try {
+					if (bookTitle.getText().equals(""))
+						JOptionPane.showMessageDialog(null,
+								"Input a book title", "No Book Title",
+								JOptionPane.INFORMATION_MESSAGE);
+					else if (bookPubDay.getText().equals("")
+							|| bookPubMonth.getText().equals("")
+							|| bookPubYear.getText().equals(""))
+						JOptionPane.showMessageDialog(null,
+								"Input a publish date", "No Publish Day",
+								JOptionPane.INFORMATION_MESSAGE);
+					else if (Integer.parseInt(bookPubDay.getText()) < 0
+							|| Integer.parseInt(bookPubDay.getText()) > 32
+							|| Integer.parseInt(bookPubMonth.getText()) < 0
+							|| Integer.parseInt(bookPubMonth.getText()) > 12
+							|| Integer.parseInt(bookPubYear.getText()) < 0
+							|| Integer.parseInt(bookPubYear.getText()) > 2012)
+						JOptionPane.showMessageDialog(null,
+								"Input a correct publish date",
+								"Incorrect Publish Day",
+								JOptionPane.INFORMATION_MESSAGE);
+					else if (bookID.getText().equals(""))
+						JOptionPane.showMessageDialog(null,
+								"Please input a Book ID", "No Book ID",
+								JOptionPane.INFORMATION_MESSAGE);
+
+					// add book thing here
+
+					clearForm();
+				} catch (NumberFormatException err) {
+					JOptionPane.showMessageDialog(null, "Please " +
+							"enter a valid format", 
+							"Invalid Input Format", 
+							JOptionPane.INFORMATION_MESSAGE);
+					clearForm();
+				}
 			}
 			else if (e.getSource() == addAuthor) {
-				
+				try {
+					if (authorFirstName.getText().equals("")
+							|| authorMiddleName.getText().equals("")
+							|| authorLastName.getText().equals(""))
+						JOptionPane.showMessageDialog(null,
+								"Input a valid author name", "No Author Name",
+								JOptionPane.INFORMATION_MESSAGE);
+					else if (authorBDay.getText().equals("")
+							|| authorBMonth.getText().equals("")
+							|| authorBYear.getText().equals(""))
+						JOptionPane.showMessageDialog(null,
+								"Input a birthday", "No Birthday",
+								JOptionPane.INFORMATION_MESSAGE);
+					else if (Integer.parseInt(authorBDay.getText()) < 0
+							|| Integer.parseInt(authorBDay.getText()) > 32
+							|| Integer.parseInt(authorBMonth.getText()) < 0
+							|| Integer.parseInt(authorBMonth.getText()) > 12
+							|| Integer.parseInt(authorBYear.getText()) < 0
+							|| Integer.parseInt(authorBYear.getText()) > 2012)
+						JOptionPane.showMessageDialog(null,
+								"Input a correct birthday",
+								"Incorrect Birthday",
+								JOptionPane.INFORMATION_MESSAGE);
+					else if (authorID.getText().equals(""))
+						JOptionPane.showMessageDialog(null,
+								"Please input a Author ID", "No Author ID",
+								JOptionPane.INFORMATION_MESSAGE);
+
+					// input an author method here
+					
+					clearForm();
+				} catch (NumberFormatException err) {
+					JOptionPane.showMessageDialog(null, "Please " +
+							"enter a valid format", 
+							"Invalid Input Format", 
+							JOptionPane.INFORMATION_MESSAGE);
+					clearForm();
+				}
 			}
 			else if (e.getSource() == searchByAuthor) {
 				
@@ -256,19 +311,23 @@ public class BookFrame extends JFrame{
 			}
 			// this clears all the form data
 			else if (e.getSource() == clearForm) {
-				authorFirstName.setText("");
-				authorMiddleName.setText("");
-				authorLastName.setText("");
-				authorBDay.setText("");
-				authorBMonth.setText("");
-				authorBYear.setText("");
-				authorID.setText("");
-				bookTitle.setText("");
-				bookPubDay.setText("");
-				bookPubMonth.setText("");
-				bookPubYear.setText("");
-				bookID.setText("");
+				clearForm();
 			}
+		}
+		
+		private void clearForm() {
+			authorFirstName.setText("");
+			authorMiddleName.setText("");
+			authorLastName.setText("");
+			authorBDay.setText("");
+			authorBMonth.setText("");
+			authorBYear.setText("");
+			authorID.setText("");
+			bookTitle.setText("");
+			bookPubDay.setText("");
+			bookPubMonth.setText("");
+			bookPubYear.setText("");
+			bookID.setText("");
 		}
 	}
 }
