@@ -104,28 +104,118 @@ public class BookSearch {
 				bYear + ", NULL);");
 	}
 
-	/*
-	 * Searches for all authors with a given first, middle, and last name and returns them all as an ArrayList of Authors
-	 * for easy outputting of messages
+	/**
+	 * Search for authors that meet a set of criteria. To not specify a field, use null
+	 * @param firstName
+	 * @param middleName
+	 * @param lastName
+	 * @param birthDay
+	 * @param birthMonth
+	 * @param birthYear
+	 * @param authorID
+	 * @return
+	 * @throws SQLException
 	 */
-	public ArrayList<Author> searchAuthor(String[] fields) throws SQLException {
+	public ArrayList<Author> searchAuthor(String firstName, String middleName, String lastName, String birthDay,
+			String birthMonth, String birthYear, String authorID) throws SQLException {
+		
 		ArrayList<Author> authors = new ArrayList<Author>();
+		String[] fields = {firstName, middleName, lastName, birthDay, birthMonth, birthYear, authorID};
+		String query = "SELECT * FROM AUTHOR";
+		for (int i = 0 ; i < fields.length ; i++)	{
+			if (fields[i] != null)	{
+				query += " WHERE";
+				break;
+			}
+		}
+
+		boolean andNeeded = false;
+		if (fields[0] != null)	{
+			query += (andNeeded) ? " AND fNamee='"+fields[0]+"'" : " fName='"+fields[0]+"'";
+			andNeeded = true;
+		}
+		if (fields[1] != null)	{
+			query += (andNeeded) ? " AND mName='"+fields[1]+"'" : " mName='"+fields[1]+"'";
+			andNeeded = true;
+		}
+		if (fields[2] != null)	{
+			query += (andNeeded) ? " AND lName='"+fields[2]+"'" : " lName='"+fields[2]+"'";
+			andNeeded = true;
+		}
+		if (fields[3] != null)	{
+			query += (andNeeded) ? " AND bDay="+fields[3] : " bDay="+fields[3];
+			andNeeded = true;
+		}
+		if (fields[4] != null)	{
+			query += (andNeeded) ? " AND bMonth="+fields[4] : " bMonth="+fields[4];
+			andNeeded = true;
+		}
+		if (fields[5] != null)	{
+			query += (andNeeded) ? " AND bYear="+fields[4] : " bYear="+fields[4];
+			andNeeded = true;
+		}
+		if (fields[6] != null)	{
+			query += (andNeeded) ? " AND authorIDh="+fields[4] : " authorID="+fields[4];
+			andNeeded = true;
+		}
+		ResultSet rs = stat.executeQuery(query);
+		while (rs.next()) authors.add(new Author(rs));
 
 		return authors;
 	}
 
-	//Searches for all books with a given title and returns them all as an ArrayList of Books
-	//for easy outputting of messages
-	public ArrayList<Book> searchBook(String[] fields) throws SQLException {
+	/**	 
+	 * Searches for all books that meet a set of criteria. To leave a field empty, pass null
+	 * @param title
+	 * @param pDay
+	 * @param pMonth
+	 * @param pYear
+	 * @param bookID
+	 * @return
+	 * @throws SQLException
+	 */
+	public ArrayList<Book> searchBook(String title, String pDay, String pMonth, String pYear, 
+			String bookID) throws SQLException {
+		
+		String[] fields = {title, pDay, pMonth, pYear, bookID};
 		ArrayList<Book> books = new ArrayList<Book>();
-
+		String query = "SELECT * FROM BOOK";
+		for (int i = 0 ; i < fields.length ; i++)	{
+			if (fields[i] != null)	{
+				query += " WHERE";
+				break;
+			}
+		}
+		boolean andNeeded = false;
+		if (fields[0] != null)	{
+			query += (andNeeded) ? " AND title='"+fields[0]+"'" : " title='"+fields[0]+"'";
+			andNeeded = true;
+		}
+		if (fields[1] != null)	{
+			query += (andNeeded) ? " AND pDay="+fields[1] : " pDay="+fields[1];
+			andNeeded = true;
+		}
+		if (fields[2] != null)	{
+			query += (andNeeded) ? " AND pMonth="+fields[2] : " pMonth="+fields[2];
+			andNeeded = true;
+		}
+		if (fields[3] != null)	{
+			query += (andNeeded) ? " AND pYear="+fields[3] : " pYear="+fields[3];
+			andNeeded = true;
+		}
+		if (fields[4] != null)	{
+			query += (andNeeded) ? " AND bookID="+fields[4] : " bookID="+fields[4];
+			andNeeded = true;
+		}
+		ResultSet rs = stat.executeQuery(query);
+		while (rs.next()) books.add(new Book(rs));
 		return books;
 	}
 
 	//Returns all of the authors for a book given the book's ID
 	public ArrayList<Author> getBookAuthors(int bookID){
 		ArrayList<Author> authors = new ArrayList<Author>();
-
+		
 		return authors;
 	}
 
@@ -139,7 +229,7 @@ public class BookSearch {
 	//Removes a book from the database, also removes all AUTHORED tuples containing the bookID
 	public void removeBook(int bookID) {
 		try {
-		rs = stat.executeQuery("DELETE FROM BOOK WHERE (bookID = '" + bookID + "');");
+		rs = stat.executeQuery("DELETE FROM BOOK WHERE bookID = '" + bookID + "'");
 		} catch (Exception err){
 
 		}

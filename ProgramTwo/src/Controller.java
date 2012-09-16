@@ -1,4 +1,4 @@
-import java.util.Calendar;
+import java.util.ArrayList;
 
 import books.*;
 
@@ -10,7 +10,7 @@ public class Controller {
 	 */
 	
 	public static void main(String[] args) throws Exception {
-		BookFrame myFrame = new BookFrame();
-				
+	
+		BookFrame frame = new BookFrame();
 	}
 }
