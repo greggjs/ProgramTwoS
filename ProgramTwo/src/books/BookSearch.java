@@ -155,7 +155,7 @@ public class BookSearch {
 			andNeeded = true;
 		}
 		if (fields[6] != null)	{
-			query += (andNeeded) ? " AND authorIDh="+fields[4] : " authorID="+fields[4];
+			query += (andNeeded) ? " AND authorID="+fields[4] : " authorID="+fields[4];
 			andNeeded = true;
 		}
 		ResultSet rs = stat.executeQuery(query);
