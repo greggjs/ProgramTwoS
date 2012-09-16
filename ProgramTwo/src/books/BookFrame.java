@@ -239,7 +239,10 @@ public class BookFrame extends JFrame{
 						JOptionPane.showMessageDialog(null,
 								"Please input a Book ID", "No Book ID",
 								JOptionPane.INFORMATION_MESSAGE);
-
+					else
+						JOptionPane.showMessageDialog(null,
+								"Book added successfully", "Success!",
+								JOptionPane.INFORMATION_MESSAGE);
 					// add book thing here
 
 					clearForm();
@@ -279,7 +282,10 @@ public class BookFrame extends JFrame{
 						JOptionPane.showMessageDialog(null,
 								"Please input a Author ID", "No Author ID",
 								JOptionPane.INFORMATION_MESSAGE);
-
+					else
+						JOptionPane.showMessageDialog(null,
+								"Author added successfully", "Success!",
+								JOptionPane.INFORMATION_MESSAGE);
 					// input an author method here
 					
 					clearForm();
