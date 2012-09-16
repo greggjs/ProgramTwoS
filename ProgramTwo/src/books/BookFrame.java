@@ -213,7 +213,25 @@ public class BookFrame extends JFrame{
 
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == addBook) {
-				
+				if (bookTitle.getText().equals(""))
+					JOptionPane.showMessageDialog(null,
+							"Input a book title", "No Book Title"
+							, JOptionPane.INFORMATION_MESSAGE);
+				else if (bookPubDay.getText().equals("") || 
+						bookPubMonth.getText().equals("") ||
+						bookPubYear.getText().equals(""))
+					JOptionPane.showMessageDialog(null,
+							"Input a publish date", "No Publish Day"
+							, JOptionPane.INFORMATION_MESSAGE);
+				else if (Integer.parseInt(bookPubDay.getText())<0 
+						|| Integer.parseInt(bookPubDay.getText()) >32
+						|| Integer.parseInt(bookPubMonth.getText())<0
+						|| Integer.parseInt(bookPubMonth.getText())>12
+						|| Integer.parseInt(bookPubYear.getText())<0
+						|| Integer.parseInt(bookPubYear.getText())>2012)
+					JOptionPane.showMessageDialog(null,
+							"Input a correct publish date", "Incorrect Publish Day"
+							, JOptionPane.INFORMATION_MESSAGE);
 			}
 			else if (e.getSource() == addAuthor) {
 				
@@ -252,6 +270,5 @@ public class BookFrame extends JFrame{
 				bookID.setText("");
 			}
 		}
-		
 	}
 }
