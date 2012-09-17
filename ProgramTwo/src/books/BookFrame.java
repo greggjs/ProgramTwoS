@@ -507,13 +507,15 @@ public class BookFrame extends JFrame {
 						"Input a valid author name", "No Author Name",
 						JOptionPane.INFORMATION_MESSAGE);
 			
-			// checks if the text field for the author birth day are blank
+			// checks if the text field for the author birthday are blank
 			else if (authorBDay.getText().equals("")
 					|| authorBMonth.getText().equals("")
 					|| authorBYear.getText().equals(""))
 				JOptionPane.showMessageDialog(null,
 						"Input a birthday", "No Birthday",
 						JOptionPane.INFORMATION_MESSAGE);
+			
+			// checks if the birthday is a valid birthday
 			else if (Integer.parseInt(authorBDay.getText()) < 0
 					|| Integer.parseInt(authorBDay.getText()) > 32
 					|| Integer.parseInt(authorBMonth.getText()) < 0
@@ -524,6 +526,8 @@ public class BookFrame extends JFrame {
 						"Input a correct birthday",
 						"Incorrect Birthday",
 						JOptionPane.INFORMATION_MESSAGE);
+			
+			// checks if the author ID is not empty
 			else if (authorID.getText().equals(""))
 				JOptionPane.showMessageDialog(null,
 						"Please input a Author ID", "No Author ID",
@@ -531,19 +535,26 @@ public class BookFrame extends JFrame {
 		}
 		
 		/**
-		 * 
+		 * This method checks the book data inputed and returns
+		 * error messages to the user if the data is incorrect
 		 */
 		private void checkBook() {
+			
+			// if the book title field is empty
 			if (bookTitle.getText().equals(""))
 				JOptionPane.showMessageDialog(null,
 						"Input a book title", "No Book Title",
 						JOptionPane.INFORMATION_MESSAGE);
+			
+			// if the book publish date is empty
 			else if (bookPubDay.getText().equals("")
 					|| bookPubMonth.getText().equals("")
 					|| bookPubYear.getText().equals(""))
 				JOptionPane.showMessageDialog(null,
 						"Input a publish date", "No Publish Day",
 						JOptionPane.INFORMATION_MESSAGE);
+			
+			// if the book publish date is not valid
 			else if (Integer.parseInt(bookPubDay.getText()) < 0
 					|| Integer.parseInt(bookPubDay.getText()) > 32
 					|| Integer.parseInt(bookPubMonth.getText()) < 0
@@ -554,6 +565,8 @@ public class BookFrame extends JFrame {
 						"Input a correct publish date",
 						"Incorrect Publish Day",
 						JOptionPane.INFORMATION_MESSAGE);
+			
+			// if the book ID field is empty
 			else if (bookID.getText().equals(""))
 				JOptionPane.showMessageDialog(null,
 						"Please input a Book ID", "No Book ID",
@@ -561,9 +574,11 @@ public class BookFrame extends JFrame {
 		}
 		
 		/**
-		 * 
+		 * this method clears all data in the text fields 
 		 */
-		private void clearForm() {
+		private void clearForm() { 
+			
+			// sets all text to empty
 			authorFirstName.setText("");
 			authorMiddleName.setText("");
 			authorLastName.setText("");
