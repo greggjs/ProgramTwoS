@@ -252,6 +252,7 @@ public class BookSearch {
 	public void removeBook(int bookID) throws SQLException {
 		
 		rs = stat.executeQuery("DELETE FROM BOOK WHERE bookID = '" + bookID + "'");
+		rs = stat.executeQuery("DELETE FROM AUTHORED WHERE bookID = '" + bookID + "'");
 		
 	}
 }
