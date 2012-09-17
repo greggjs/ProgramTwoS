@@ -212,16 +212,38 @@ public class BookSearch {
 		return books;
 	}
 
-	//Returns all of the authors for a book given the book's ID
-	public ArrayList<Author> getBookAuthors(int bookID){
+	/**
+	 * Returns all of the authors for a book given the book's ID
+	 * @param bookID
+	 * @return
+	 */
+	public ArrayList<Author> getBookAuthors(int bookID) throws SQLException	{
 		ArrayList<Author> authors = new ArrayList<Author>();
-		
+		ResultSet rs = stat.executeQuery("SELECT * FROM AUTHORED WHERE bookID="+bookID);
+		ArrayList<Integer> authorIDs = new ArrayList<Integer>();
+		while (rs.next()) authorIDs.add(rs.getInt("authorID"));
+		for (Integer id : authorIDs)	{
+			rs = stat.executeQuery("SELECT * FROM AUTHOR WHERE authorID="+id);
+			while (rs.next()) authors.add(new Author(rs));
+		}
 		return authors;
 	}
 
-	//Returns all of the books an author wrote given the author's ID
-	public ArrayList<Book> getAuthorsBooks(int authorID){
+	/**
+	 * Finds all of the books an author has written given the author's ID
+	 * @param authorID
+	 * @return
+	 * @throws SQLException 
+	 */
+	public ArrayList<Book> getAuthorsBooks(int authorID) throws SQLException	{
 		ArrayList<Book> books = new ArrayList<Book>();
+		ResultSet rs = stat.executeQuery("SELECT * FROM AUTHORED WHERE authorID="+authorID);
+		ArrayList<Integer> bookIDs = new ArrayList<Integer>();
+		while (rs.next()) bookIDs.add(rs.getInt("bookID"));
+		for (Integer id : bookIDs)	{
+			rs = stat.executeQuery("SELECT * FROM BOOK WHERE bookID=" + id);
+			while (rs.next()) books.add(new Book(rs));
+		}
 
 		return books;
 	}
