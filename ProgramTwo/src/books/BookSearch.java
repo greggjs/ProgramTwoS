@@ -259,6 +259,11 @@ public class BookSearch {
 		
 	}
 	
+	/**
+	 * Removes authors and all of the books written by the author
+	 * @param authorID
+	 * @throws SQLException
+	 */
 	public void removeAuthor(int authorID) throws SQLException	{
 		ArrayList<Integer> booksToBeDeleted = new ArrayList<Integer>();
 		
