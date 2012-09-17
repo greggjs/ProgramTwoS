@@ -248,11 +248,20 @@ public class BookSearch {
 		return books;
 	}
 
-	//Removes a book from the database, also removes all AUTHORED tuples containing the bookID
+	/**
+	 * Removes a book from the database, also removes all AUTHORED tuples containing the bookID
+	 * @param bookID
+	 * @throws SQLException
+	 */
 	public void removeBook(int bookID) throws SQLException {
 		
-		rs = stat.executeQuery("DELETE FROM BOOK WHERE bookID = '" + bookID + "'");
-		rs = stat.executeQuery("DELETE FROM AUTHORED WHERE bookID = '" + bookID + "'");
+		stat.execute("DELETE FROM BOOK WHERE bookID = '" + bookID + "'");
+		stat.execute("DELETE FROM AUTHORED WHERE bookID = '" + bookID + "'");
 		
+	}
+	
+	public void removeAuthor(int authorID) throws SQLException	{
+		stat.execute("DELETE FROM AUTHOR WHERE authorID = '" + authorID + "'");
+		stat.execute("DELETE FROM AUTHORED WHERE authorID = '" + authorID + "'");
 	}
 }
