@@ -57,10 +57,11 @@ public class BookFrame extends JFrame {
 		// make an object to search our database
 		try {
 			search = new BookSearch("Project2.db");
-		} catch (SQLException err) {
+		} catch (SQLException err) { // catches if it doesn't exist
 			JOptionPane.showMessageDialog(null, "Cannot Connect " +
 					" to database specified.", "Database Does Not"
 					+ " Exist", JOptionPane.INFORMATION_MESSAGE);
+			System.exit(-1); // closes as well
 		}
 		// searchPanel holds the book and search options, which are
 		// on the bookPanel and authorPanel respectively
