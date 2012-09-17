@@ -226,42 +226,28 @@ public class BookFrame extends JFrame {
 	public class Click implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
-			
-			// add a book
-			if (e.getSource() == addBook) {
-				try {
+			try {
+				// add a book
+				if (e.getSource() == addBook) {
 
 					checkBook();
-					
+
 					search.addBook(bookTitle.getText(),
 							Integer.parseInt(bookPubDay.getText()),
 							Integer.parseInt(bookPubMonth.getText()),
 							Integer.parseInt(bookPubYear.getText()));
-					
+
 					JOptionPane.showMessageDialog(null,
 							"Book added successfully", "Success!",
 							JOptionPane.INFORMATION_MESSAGE);
-					
+
 					clearForm();
-					
-				} catch (NumberFormatException err) {
-					JOptionPane.showMessageDialog(null, "Please " +
-							"enter a valid format", 
-							"Invalid Input Format", 
-							JOptionPane.INFORMATION_MESSAGE);
-					clearForm();
-				}  catch (SQLException err) {
-					JOptionPane.showMessageDialog(null,
-							"SQL Error", 
-							"SQL Error", 
-							JOptionPane.INFORMATION_MESSAGE);
-					clearForm();
+
 				}
-			}
-			
-			// add an author
-			else if (e.getSource() == addAuthor) {
-				try {
+
+				// add an author
+				else if (e.getSource() == addAuthor) {
+
 					checkAuthor();
 
 					search.addAuthor(authorFirstName.getText(),
@@ -274,27 +260,13 @@ public class BookFrame extends JFrame {
 					JOptionPane.showMessageDialog(null,
 							"Author added successfully", "Success!",
 							JOptionPane.INFORMATION_MESSAGE);
-					
+
 					clearForm();
-					
-				} catch (NumberFormatException err) {
-					JOptionPane.showMessageDialog(null, "Please " +
-							"enter a valid format", 
-							"Invalid Input Format", 
-							JOptionPane.INFORMATION_MESSAGE);
-					clearForm();
-				} catch (SQLException err) {
-					JOptionPane.showMessageDialog(null,
-							"SQL Error", 
-							"SQL Error", 
-							JOptionPane.INFORMATION_MESSAGE);
-					clearForm();
+
 				}
-			}
-			
-			// search for an author
-			else if (e.getSource() == searchByAuthor) {
-				try {
+
+				// search for an author
+				else if (e.getSource() == searchByAuthor) {
 
 					checkAuthor();
 
@@ -307,79 +279,78 @@ public class BookFrame extends JFrame {
 					displayResults(null, authors);
 
 					clearForm();
-					
-				} catch (NumberFormatException err) {
-					JOptionPane.showMessageDialog(null, "Please " +
-							"enter a valid format", 
-							"Invalid Input Format", 
-							JOptionPane.INFORMATION_MESSAGE);
-					clearForm();
-				} catch (SQLException err) {
-					JOptionPane.showMessageDialog(null,
-							"SQL Error", 
-							"SQL Error", 
-							JOptionPane.INFORMATION_MESSAGE);
-					clearForm();
+
 				}
-			}
-			
-			// search for a book by it's title
-			else if (e.getSource() == searchByTitle) {
-				try {
-					
+
+				// search for a book by it's title
+				else if (e.getSource() == searchByTitle) {
+
 					checkBook();
-					
+
 					books = search.searchBook(bookTitle.getText(),
-							bookPubDay.getText(),
-							bookPubMonth.getText(),
-							bookPubYear.getText(), 
-							bookID.getText());
-					
+							bookPubDay.getText(), bookPubMonth.getText(),
+							bookPubYear.getText(), bookID.getText());
+
 					displayResults(books, null);
-					
+
 					clearForm();
-					
-					
-				} catch (NumberFormatException err) {
-					JOptionPane.showMessageDialog(null, "Please " +
-							"enter a valid format", 
-							"Invalid Input Format", 
-							JOptionPane.INFORMATION_MESSAGE);
-					clearForm();
-				} catch (SQLException err) {
+
+				}
+
+				// remove a book from the database
+				else if (e.getSource() == removeBook) {
+
+					if (bookID.getText().equals("") || 
+							Integer.parseInt(bookID.getText()) < 0)
+						JOptionPane.showMessageDialog(null,
+								"Please input a valid Book ID", "No Book ID",
+								JOptionPane.INFORMATION_MESSAGE);
+
+					search.removeBook(Integer.parseInt(bookID.getText()));
+
 					JOptionPane.showMessageDialog(null,
-							"SQL Error", 
-							"SQL Error", 
+							"Book deleted successfully", "Success!",
 							JOptionPane.INFORMATION_MESSAGE);
+
+					clearForm();
+
+				}
+				
+				// search by a keyword
+				else if (e.getSource() == searchByKeyword) {
+
+				}
+
+				// modify a book
+				else if (e.getSource() == modifyBook) {
+
+				}
+
+				// modify an author
+				else if (e.getSource() == modifyAuthor) {
+
+				}
+
+				// clears all the form data
+				else if (e.getSource() == clearForm) {
 					clearForm();
 				}
 				
-			}
-			
-			// remove a book from the database
-			else if (e.getSource() == removeBook) {
+			} catch (NumberFormatException err) {
 				
-			}
-			
-			// search by a keyword
-			else if (e.getSource() == searchByKeyword) {
-				
-			}
-			
-			// modify a book
-			else if (e.getSource() == modifyBook) {
-				
-			}
-			
-			// modify an author
-			else if (e.getSource() == modifyAuthor) {
-				
-			}
-			
-			// clears all the form data
-			else if (e.getSource() == clearForm) {
+				JOptionPane.showMessageDialog(null, "Please "
+						+ "enter a valid format", "Invalid Input Format",
+						JOptionPane.INFORMATION_MESSAGE);
 				clearForm();
+				
+			} catch (SQLException err) {
+				
+				JOptionPane.showMessageDialog(null, "SQL Error", "SQL Error",
+						JOptionPane.INFORMATION_MESSAGE);
+				clearForm();
+				
 			}
+			
 		}
 		
 		private void displayResults(ArrayList<Book> bookList,

@@ -227,13 +227,9 @@ public class BookSearch {
 	}
 
 	//Removes a book from the database, also removes all AUTHORED tuples containing the bookID
-	public void removeBook(int bookID) {
-		try {
+	public void removeBook(int bookID) throws SQLException {
+		
 		rs = stat.executeQuery("DELETE FROM BOOK WHERE bookID = '" + bookID + "'");
-		} catch (Exception err){
-
-		}
+		
 	}
-
-
 }
