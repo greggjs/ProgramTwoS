@@ -12,12 +12,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
+import java.sql.*;
 
-public class BookFrame extends JFrame{
+public class BookFrame extends JFrame {
 	
 	JPanel searchPanel; // panels for holding search and button options
 	JPanel buttonPanel;
-	JButton search; // buttons implemented
 	JButton clearForm;
 	JButton addBook;
 	JButton addAuthor;
@@ -27,6 +27,7 @@ public class BookFrame extends JFrame{
 	JButton searchByKeyword;
 	JButton modifyBook;
 	JButton modifyAuthor;
+	
 	JTextField bookTitle; // text fields for book search
 	JTextField bookPubDay;
 	JTextField bookPubMonth;
@@ -40,7 +41,11 @@ public class BookFrame extends JFrame{
 	JTextField authorBYear;
 	JTextField authorID;
 	
-	public BookFrame() {
+	BookSearch search;
+	ArrayList<Book> books = new ArrayList<Book>();
+	ArrayList<Author> authors = new ArrayList<Author>();
+	
+	public BookFrame() throws Exception {
 		
 		// construct a new frame, set general settings
 		super("Book & Author Search");
@@ -49,6 +54,14 @@ public class BookFrame extends JFrame{
 		setBounds(200, 200, 800, 300);
 		setResizable(false);
 		
+		// make an object to search our database
+		try {
+			search = new BookSearch("Project2.db");
+		} catch (SQLException err) {
+			JOptionPane.showMessageDialog(null, "Cannot Connect " +
+					" to database specified.", "Database Does Not"
+					+ " Exist", JOptionPane.INFORMATION_MESSAGE);
+		}
 		// searchPanel holds the book and search options, which are
 		// on the bookPanel and authorPanel respectively
 		searchPanel = new JPanel(new GridLayout(1, 2));
@@ -213,112 +226,235 @@ public class BookFrame extends JFrame{
 	public class Click implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
+			
+			// add a book
 			if (e.getSource() == addBook) {
 				try {
-					if (bookTitle.getText().equals(""))
-						JOptionPane.showMessageDialog(null,
-								"Input a book title", "No Book Title",
-								JOptionPane.INFORMATION_MESSAGE);
-					else if (bookPubDay.getText().equals("")
-							|| bookPubMonth.getText().equals("")
-							|| bookPubYear.getText().equals(""))
-						JOptionPane.showMessageDialog(null,
-								"Input a publish date", "No Publish Day",
-								JOptionPane.INFORMATION_MESSAGE);
-					else if (Integer.parseInt(bookPubDay.getText()) < 0
-							|| Integer.parseInt(bookPubDay.getText()) > 32
-							|| Integer.parseInt(bookPubMonth.getText()) < 0
-							|| Integer.parseInt(bookPubMonth.getText()) > 12
-							|| Integer.parseInt(bookPubYear.getText()) < 0
-							|| Integer.parseInt(bookPubYear.getText()) > 2012)
-						JOptionPane.showMessageDialog(null,
-								"Input a correct publish date",
-								"Incorrect Publish Day",
-								JOptionPane.INFORMATION_MESSAGE);
-					else if (bookID.getText().equals(""))
-						JOptionPane.showMessageDialog(null,
-								"Please input a Book ID", "No Book ID",
-								JOptionPane.INFORMATION_MESSAGE);
-					else
-						JOptionPane.showMessageDialog(null,
-								"Book added successfully", "Success!",
-								JOptionPane.INFORMATION_MESSAGE);
-					// add book thing here
 
-					clearForm();
-				} catch (NumberFormatException err) {
-					JOptionPane.showMessageDialog(null, "Please " +
-							"enter a valid format", 
-							"Invalid Input Format", 
+					checkBook();
+					
+					search.addBook(bookTitle.getText(),
+							Integer.parseInt(bookPubDay.getText()),
+							Integer.parseInt(bookPubMonth.getText()),
+							Integer.parseInt(bookPubYear.getText()));
+					
+					JOptionPane.showMessageDialog(null,
+							"Book added successfully", "Success!",
 							JOptionPane.INFORMATION_MESSAGE);
-					clearForm();
-				}
-			}
-			else if (e.getSource() == addAuthor) {
-				try {
-					if (authorFirstName.getText().equals("")
-							|| authorMiddleName.getText().equals("")
-							|| authorLastName.getText().equals(""))
-						JOptionPane.showMessageDialog(null,
-								"Input a valid author name", "No Author Name",
-								JOptionPane.INFORMATION_MESSAGE);
-					else if (authorBDay.getText().equals("")
-							|| authorBMonth.getText().equals("")
-							|| authorBYear.getText().equals(""))
-						JOptionPane.showMessageDialog(null,
-								"Input a birthday", "No Birthday",
-								JOptionPane.INFORMATION_MESSAGE);
-					else if (Integer.parseInt(authorBDay.getText()) < 0
-							|| Integer.parseInt(authorBDay.getText()) > 32
-							|| Integer.parseInt(authorBMonth.getText()) < 0
-							|| Integer.parseInt(authorBMonth.getText()) > 12
-							|| Integer.parseInt(authorBYear.getText()) < 0
-							|| Integer.parseInt(authorBYear.getText()) > 2012)
-						JOptionPane.showMessageDialog(null,
-								"Input a correct birthday",
-								"Incorrect Birthday",
-								JOptionPane.INFORMATION_MESSAGE);
-					else if (authorID.getText().equals(""))
-						JOptionPane.showMessageDialog(null,
-								"Please input a Author ID", "No Author ID",
-								JOptionPane.INFORMATION_MESSAGE);
-					else
-						JOptionPane.showMessageDialog(null,
-								"Author added successfully", "Success!",
-								JOptionPane.INFORMATION_MESSAGE);
-					// input an author method here
 					
 					clearForm();
+					
 				} catch (NumberFormatException err) {
 					JOptionPane.showMessageDialog(null, "Please " +
 							"enter a valid format", 
 							"Invalid Input Format", 
 							JOptionPane.INFORMATION_MESSAGE);
 					clearForm();
+				}  catch (SQLException err) {
+					JOptionPane.showMessageDialog(null,
+							"SQL Error", 
+							"SQL Error", 
+							JOptionPane.INFORMATION_MESSAGE);
+					clearForm();
 				}
 			}
+			
+			// add an author
+			else if (e.getSource() == addAuthor) {
+				try {
+					checkAuthor();
+
+					search.addAuthor(authorFirstName.getText(),
+							authorMiddleName.getText(),
+							authorLastName.getText(),
+							Integer.parseInt(authorBDay.getText()),
+							Integer.parseInt(authorBMonth.getText()),
+							Integer.parseInt(authorBYear.getText()));
+
+					JOptionPane.showMessageDialog(null,
+							"Author added successfully", "Success!",
+							JOptionPane.INFORMATION_MESSAGE);
+					
+					clearForm();
+					
+				} catch (NumberFormatException err) {
+					JOptionPane.showMessageDialog(null, "Please " +
+							"enter a valid format", 
+							"Invalid Input Format", 
+							JOptionPane.INFORMATION_MESSAGE);
+					clearForm();
+				} catch (SQLException err) {
+					JOptionPane.showMessageDialog(null,
+							"SQL Error", 
+							"SQL Error", 
+							JOptionPane.INFORMATION_MESSAGE);
+					clearForm();
+				}
+			}
+			
+			// search for an author
 			else if (e.getSource() == searchByAuthor) {
-				
+				try {
+
+					checkAuthor();
+
+					authors = search.searchAuthor(authorFirstName.getText(),
+							authorMiddleName.getText(),
+							authorLastName.getText(), authorBDay.getText(),
+							authorBMonth.getText(), authorBYear.getText(),
+							authorID.getText());
+
+					displayResults(null, authors);
+
+					clearForm();
+					
+				} catch (NumberFormatException err) {
+					JOptionPane.showMessageDialog(null, "Please " +
+							"enter a valid format", 
+							"Invalid Input Format", 
+							JOptionPane.INFORMATION_MESSAGE);
+					clearForm();
+				} catch (SQLException err) {
+					JOptionPane.showMessageDialog(null,
+							"SQL Error", 
+							"SQL Error", 
+							JOptionPane.INFORMATION_MESSAGE);
+					clearForm();
+				}
 			}
+			
+			// search for a book by it's title
 			else if (e.getSource() == searchByTitle) {
+				try {
+					
+					checkBook();
+					
+					books = search.searchBook(bookTitle.getText(),
+							bookPubDay.getText(),
+							bookPubMonth.getText(),
+							bookPubYear.getText(), 
+							bookID.getText());
+					
+					displayResults(books, null);
+					
+					clearForm();
+					
+					
+				} catch (NumberFormatException err) {
+					JOptionPane.showMessageDialog(null, "Please " +
+							"enter a valid format", 
+							"Invalid Input Format", 
+							JOptionPane.INFORMATION_MESSAGE);
+					clearForm();
+				} catch (SQLException err) {
+					JOptionPane.showMessageDialog(null,
+							"SQL Error", 
+							"SQL Error", 
+							JOptionPane.INFORMATION_MESSAGE);
+					clearForm();
+				}
 				
 			}
+			
+			// remove a book from the database
 			else if (e.getSource() == removeBook) {
 				
 			}
+			
+			// search by a keyword
 			else if (e.getSource() == searchByKeyword) {
 				
 			}
+			
+			// modify a book
 			else if (e.getSource() == modifyBook) {
 				
 			}
+			
+			// modify an author
 			else if (e.getSource() == modifyAuthor) {
 				
 			}
-			// this clears all the form data
+			
+			// clears all the form data
 			else if (e.getSource() == clearForm) {
 				clearForm();
 			}
+		}
+		
+		private void displayResults(ArrayList<Book> bookList,
+				ArrayList<Author> authorList) {
+			String result = "";
+			if (authorList == null) {
+				for (int i = 0; i < bookList.size(); i++)
+					result.concat(bookList.get(i).toString()).concat("\n");
+				JOptionPane.showMessageDialog(null, result, 
+						"Book Search Results", 
+						JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				for (int i = 0; i < authorList.size(); i++)
+					result.concat(authorList.get(i).toString()).concat("\n");
+				JOptionPane.showMessageDialog(null, result, 
+						"Book Search Results", 
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+			
+		}
+		
+		private void checkAuthor() {
+			if (authorFirstName.getText().equals("")
+					|| authorMiddleName.getText().equals("")
+					|| authorLastName.getText().equals(""))
+				JOptionPane.showMessageDialog(null,
+						"Input a valid author name", "No Author Name",
+						JOptionPane.INFORMATION_MESSAGE);
+			else if (authorBDay.getText().equals("")
+					|| authorBMonth.getText().equals("")
+					|| authorBYear.getText().equals(""))
+				JOptionPane.showMessageDialog(null,
+						"Input a birthday", "No Birthday",
+						JOptionPane.INFORMATION_MESSAGE);
+			else if (Integer.parseInt(authorBDay.getText()) < 0
+					|| Integer.parseInt(authorBDay.getText()) > 32
+					|| Integer.parseInt(authorBMonth.getText()) < 0
+					|| Integer.parseInt(authorBMonth.getText()) > 12
+					|| Integer.parseInt(authorBYear.getText()) < 0
+					|| Integer.parseInt(authorBYear.getText()) > 2012)
+				JOptionPane.showMessageDialog(null,
+						"Input a correct birthday",
+						"Incorrect Birthday",
+						JOptionPane.INFORMATION_MESSAGE);
+			else if (authorID.getText().equals(""))
+				JOptionPane.showMessageDialog(null,
+						"Please input a Author ID", "No Author ID",
+						JOptionPane.INFORMATION_MESSAGE);
+		}
+		
+		private void checkBook() {
+			if (bookTitle.getText().equals(""))
+				JOptionPane.showMessageDialog(null,
+						"Input a book title", "No Book Title",
+						JOptionPane.INFORMATION_MESSAGE);
+			else if (bookPubDay.getText().equals("")
+					|| bookPubMonth.getText().equals("")
+					|| bookPubYear.getText().equals(""))
+				JOptionPane.showMessageDialog(null,
+						"Input a publish date", "No Publish Day",
+						JOptionPane.INFORMATION_MESSAGE);
+			else if (Integer.parseInt(bookPubDay.getText()) < 0
+					|| Integer.parseInt(bookPubDay.getText()) > 32
+					|| Integer.parseInt(bookPubMonth.getText()) < 0
+					|| Integer.parseInt(bookPubMonth.getText()) > 12
+					|| Integer.parseInt(bookPubYear.getText()) < 0
+					|| Integer.parseInt(bookPubYear.getText()) > 2012)
+				JOptionPane.showMessageDialog(null,
+						"Input a correct publish date",
+						"Incorrect Publish Day",
+						JOptionPane.INFORMATION_MESSAGE);
+			else if (bookID.getText().equals(""))
+				JOptionPane.showMessageDialog(null,
+						"Please input a Book ID", "No Book ID",
+						JOptionPane.INFORMATION_MESSAGE);
 		}
 		
 		private void clearForm() {
