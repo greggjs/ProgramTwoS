@@ -254,16 +254,12 @@ public class BookSearch {
 	 * @throws SQLException
 	 */
 	public void removeBook(int bookID) throws SQLException {
-		stat.execute("PRAGMA foreign_keys = OFF;");	
-		
-		stat.execute("DELETE FROM BOOK WHERE bookID = '" + bookID + "'");
 		stat.execute("DELETE FROM AUTHORED WHERE bookID = '" + bookID + "'");
-		stat.execute("PRAGMA foreign_keys = ON;");
+		stat.execute("DELETE FROM BOOK WHERE bookID = '" + bookID + "'");
 		
 	}
 	
 	public void removeAuthor(int authorID) throws SQLException	{
-		stat.execute("PRAGMA foreign_keys = OFF;");
 		ArrayList<Integer> booksToBeDeleted = new ArrayList<Integer>();
 		
 		ResultSet rs = stat.executeQuery("SELECT * FROM AUTHORED WHERE authorID = '" + authorID + "'");
@@ -272,6 +268,5 @@ public class BookSearch {
 		for (Integer bookID : booksToBeDeleted) removeBook(bookID);
 		
 		stat.execute("DELETE FROM AUTHOR WHERE authorID = '" + authorID + "'");
-		stat.execute("PRAGMA foreign_keys = ON;");
 	}
 }
