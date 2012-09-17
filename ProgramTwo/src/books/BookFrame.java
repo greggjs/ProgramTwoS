@@ -41,20 +41,32 @@ public class BookFrame extends JFrame {
 	JTextField authorBYear;
 	JTextField authorID;
 	
-	BookSearch search;
+	BookSearch search; // object to search through the database
+	
+	// objects to store book and author search results
 	ArrayList<Book> books = new ArrayList<Book>();
 	ArrayList<Author> authors = new ArrayList<Author>();
 	
+	/**
+	 * 
+	 * @throws Exception
+	 */
 	public BookFrame() throws Exception {
 		
-		// construct a new frame, set general settings
+		/////////////////////////////////////////////////
+		// construct a new frame, set general settings //
+		/////////////////////////////////////////////////
+		
 		super("Book & Author Search");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 		setBounds(200, 200, 800, 300);
 		setResizable(false);
 		
-		// make an object to search our database
+		///////////////////////////////////////////
+		// make an object to search our database //
+		///////////////////////////////////////////
+		
 		try {
 			search = new BookSearch("Project2.db");
 		} catch (SQLException err) { // catches if it doesn't exist
@@ -63,16 +75,22 @@ public class BookFrame extends JFrame {
 					+ " Exist", JOptionPane.INFORMATION_MESSAGE);
 			System.exit(-1); // closes as well
 		}
-		// searchPanel holds the book and search options, which are
-		// on the bookPanel and authorPanel respectively
+		
+		//////////////////////////////////////////////////////////////
+		// searchPanel holds the book and search options, which are //
+		// on the bookPanel and authorPanel respectively            //
+		//////////////////////////////////////////////////////////////
+		
 		searchPanel = new JPanel(new GridLayout(1, 2));
-//		searchPanel.setLayout(null);
 		JPanel bookPanel = new JPanel();
 		bookPanel.setLayout(null);
 		JPanel authorPanel = new JPanel();
 		authorPanel.setLayout(null);
 		
-		// Labels for labeling the textboxes
+		///////////////////////////////////////
+		// Labels for labeling the textboxes //
+		///////////////////////////////////////
+		
 		JLabel bookLabel1 = new JLabel("Title");
 		JLabel bookLabel2 = new JLabel("Publish Day");
 		JLabel bookLabel3 = new JLabel("Publish Month");
@@ -88,12 +106,19 @@ public class BookFrame extends JFrame {
 		JLabel authorLabel7 = new JLabel("Author ID");
 		JLabel authorLabel8 = new JLabel("Author");
 		
+		///////////////////////////////////////////////////
+		// fonts to make the author and book titles bold //
+		///////////////////////////////////////////////////
+		
 		Font bold1 = new Font(bookLabel6.getFont().getName(),
 				Font.BOLD, bookLabel6.getFont().getSize());
 		Font bold2 = new Font(authorLabel8.getFont().getName(),
 				Font.BOLD, authorLabel8.getFont().getSize());
 		
-		// text fields for getting the information from the user
+		///////////////////////////////////////////////////////////
+		// text fields for getting the information from the user //
+		///////////////////////////////////////////////////////////
+		
 		bookTitle = new JTextField(); // books 
 		bookPubDay = new JTextField();
 		bookPubMonth = new JTextField();
@@ -107,7 +132,10 @@ public class BookFrame extends JFrame {
 		authorBYear = new JTextField();
 		authorID = new JTextField();
 		
-		// add the labels and textfields to the bookPanel
+		////////////////////////////////////////////////////
+		// add the labels and textfields to the bookPanel //
+		////////////////////////////////////////////////////
+		
 		bookLabel6.setFont(bold1); // book header
 		bookPanel.add(bookLabel6); 
 		bookLabel6.setBounds(140, 10, 200, 25);
@@ -135,8 +163,10 @@ public class BookFrame extends JFrame {
 		bookPanel.add(bookID);
 		bookID.setBounds(8, 160, 200, 25);
 		
+		///////////////////////////////////////////////////////
+		// add the labels annd textfields to the authorPanel //
+		///////////////////////////////////////////////////////
 		
-		// add the labels annd textfields to the authorPanel
 		authorLabel8.setFont(bold2); // author header
 		authorPanel.add(authorLabel8);
 		authorLabel8.setBounds(140, 10, 200, 25);
@@ -172,11 +202,17 @@ public class BookFrame extends JFrame {
 		authorPanel.add(authorID);
 		authorID.setBounds(8, 160, 200, 25);
 		
-		// add the two panels to the searchPanel
+		///////////////////////////////////////////
+		// add the two panels to the searchPanel //
+		///////////////////////////////////////////
+		
 		searchPanel.add(bookPanel);
 		searchPanel.add(authorPanel);
 		
-		// initialize all buttons
+		////////////////////////////
+		// initialize all buttons //
+		////////////////////////////
+		
 		buttonPanel = new JPanel(new GridLayout(3, 3));
 		clearForm = new JButton("Clear Form");
 		addBook = new JButton("Add Book");
@@ -188,7 +224,10 @@ public class BookFrame extends JFrame {
 		modifyBook = new JButton("Modify Book...");
 		modifyAuthor = new JButton("Modify Author...");
 		
-		// add buttons to panel
+		//////////////////////////
+		// add buttons to panel //
+		//////////////////////////
+		
 		buttonPanel.add(addBook);
 		buttonPanel.add(addAuthor);
 		buttonPanel.add(removeBook);
@@ -199,11 +238,17 @@ public class BookFrame extends JFrame {
 		buttonPanel.add(modifyAuthor);
 		buttonPanel.add(clearForm);
 		
-		// add the panel to the frame
+		////////////////////////////////
+		// add the panel to the frame //
+		////////////////////////////////
+		
 		this.add(searchPanel, BorderLayout.CENTER);
 		this.add(buttonPanel, BorderLayout.SOUTH);
 		
-		// connect all the buttons to the ActionListener
+		///////////////////////////////////////////////////
+		// connect all the buttons to the ActionListener //
+		///////////////////////////////////////////////////
+		
 		Click button = new Click();
 		clearForm.addActionListener(button);
 		addBook.addActionListener(button);
@@ -215,8 +260,12 @@ public class BookFrame extends JFrame {
 		modifyBook.addActionListener(button);
 		modifyAuthor.addActionListener(button);
 		
-		// make the JFrame visible
+		/////////////////////////////
+		// make the JFrame visible //
+		/////////////////////////////
+		
 		setVisible(true);
+		
 	}
 	
 	/**
@@ -226,31 +275,44 @@ public class BookFrame extends JFrame {
 	 */
 	public class Click implements ActionListener {
 
+		// This is what processes all events put through the buttons
 		public void actionPerformed(ActionEvent e) {
 			try {
-				// add a book
+				
+				////////////////
+				// add a book //
+				////////////////
+				
 				if (e.getSource() == addBook) {
-
+					// check and see if it's valid input
 					checkBook();
 
+					// add the book to the database
 					search.addBook(bookTitle.getText(),
 							Integer.parseInt(bookPubDay.getText()),
 							Integer.parseInt(bookPubMonth.getText()),
 							Integer.parseInt(bookPubYear.getText()));
 
+					// show a message box saying it was successful
 					JOptionPane.showMessageDialog(null,
 							"Book added successfully", "Success!",
 							JOptionPane.INFORMATION_MESSAGE);
 
+					// clear the form data
 					clearForm();
 
 				}
-
-				// add an author
+				
+				///////////////////
+				// add an author //
+				///////////////////
+				
 				else if (e.getSource() == addAuthor) {
-
+					
+					// check and see if it's a valid input
 					checkAuthor();
-
+					
+					// add the author to the database
 					search.addAuthor(authorFirstName.getText(),
 							authorMiddleName.getText(),
 							authorLastName.getText(),
@@ -258,85 +320,122 @@ public class BookFrame extends JFrame {
 							Integer.parseInt(authorBMonth.getText()),
 							Integer.parseInt(authorBYear.getText()));
 
+					// show a message saying it was successful
 					JOptionPane.showMessageDialog(null,
 							"Author added successfully", "Success!",
 							JOptionPane.INFORMATION_MESSAGE);
 
+					// clear the form data
 					clearForm();
 
 				}
-
-				// search for an author
+				
+				//////////////////////////
+				// search for an author //
+				//////////////////////////
+				
 				else if (e.getSource() == searchByAuthor) {
 
+					// check and see if it's a valid author input
 					checkAuthor();
 
+					// put the search results in the proper ArrayList
 					authors = search.searchAuthor(authorFirstName.getText(),
 							authorMiddleName.getText(),
 							authorLastName.getText(), authorBDay.getText(),
 							authorBMonth.getText(), authorBYear.getText(),
 							authorID.getText());
 
+					// display the results to the user
 					displayResults(null, authors);
 
+					// clear the form data
 					clearForm();
 
 				}
-
-				// search for a book by it's title
+				
+				/////////////////////////////////////
+				// search for a book by it's title //
+				/////////////////////////////////////
+				
 				else if (e.getSource() == searchByTitle) {
-
+					
+					// check and see if it's a valid book input
 					checkBook();
-
+					
+					// put the results in the proper ArrayList
 					books = search.searchBook(bookTitle.getText(),
 							bookPubDay.getText(), bookPubMonth.getText(),
 							bookPubYear.getText(), bookID.getText());
-
+					
+					// display the results to the user
 					displayResults(books, null);
 
+					// clear the form data
 					clearForm();
 
 				}
 
-				// remove a book from the database
+				/////////////////////////////////////
+				// remove a book from the database //
+				/////////////////////////////////////
+				
 				else if (e.getSource() == removeBook) {
-
+					
+					// catch if the bookID is not properly formatted
 					if (bookID.getText().equals("") || 
 							Integer.parseInt(bookID.getText()) < 0)
 						JOptionPane.showMessageDialog(null,
 								"Please input a valid Book ID", "No Book ID",
 								JOptionPane.INFORMATION_MESSAGE);
 
+					// remove the book
 					search.removeBook(Integer.parseInt(bookID.getText()));
 
+					// tell the user that the remove was successful
 					JOptionPane.showMessageDialog(null,
 							"Book deleted successfully", "Success!",
 							JOptionPane.INFORMATION_MESSAGE);
 
+					// clear the form data
 					clearForm();
 
 				}
 				
-				// search by a keyword
+				/////////////////////////
+				// search by a keyword //
+				/////////////////////////
+				
 				else if (e.getSource() == searchByKeyword) {
-
+					
 				}
 
-				// modify a book
+				///////////////////
+				// modify a book //
+				///////////////////
+				
 				else if (e.getSource() == modifyBook) {
-
+					
 				}
 
-				// modify an author
+				//////////////////////
+				// modify an author //
+				//////////////////////
+				
 				else if (e.getSource() == modifyAuthor) {
-
+					
 				}
 
-				// clears all the form data
+				//////////////////////////////
+				// clears all the form data //
+				//////////////////////////////
+				
 				else if (e.getSource() == clearForm) {
 					clearForm();
 				}
 				
+			// catch all execptions if the format of the input was
+			// incorrect
 			} catch (NumberFormatException err) {
 				
 				JOptionPane.showMessageDialog(null, "Please "
@@ -344,6 +443,8 @@ public class BookFrame extends JFrame {
 						JOptionPane.INFORMATION_MESSAGE);
 				clearForm();
 				
+			// catch all types of SQL exceptions that occur in
+			// the method
 			} catch (SQLException err) {
 				
 				JOptionPane.showMessageDialog(null, "SQL Error", "SQL Error",
@@ -354,18 +455,37 @@ public class BookFrame extends JFrame {
 			
 		}
 		
+		/**
+		 * This method displays search results to the user after 
+		 * a search has been called and executed successfully.
+		 * 
+		 * @param bookList the search result of books
+		 * @param authorList the search result of authors
+		 */
 		private void displayResults(ArrayList<Book> bookList,
 				ArrayList<Author> authorList) {
-			String result = "";
+			
+			String result = ""; // result stored as a single string
+			
+			// this handles displaying book results
 			if (authorList == null) {
+				// concatenates the book results into result
+				// it creates a new line after each result
 				for (int i = 0; i < bookList.size(); i++)
 					result.concat(bookList.get(i).toString()).concat("\n");
+				// displays the result to the user
 				JOptionPane.showMessageDialog(null, result, 
 						"Book Search Results", 
 						JOptionPane.INFORMATION_MESSAGE);
-			} else {
+			} 
+			
+			// this handles displaying author results
+			else {
+				// concatenates the author results into result
+				// it creates a new line after each result
 				for (int i = 0; i < authorList.size(); i++)
 					result.concat(authorList.get(i).toString()).concat("\n");
+				// displays the result to the user
 				JOptionPane.showMessageDialog(null, result, 
 						"Book Search Results", 
 						JOptionPane.INFORMATION_MESSAGE);
@@ -373,13 +493,21 @@ public class BookFrame extends JFrame {
 			
 		}
 		
+		/**
+		 * This method checks the author data inputed and returns
+		 * error messages to the user if the data is incorrect
+		 */
 		private void checkAuthor() {
+			
+			// checks if the text fields for the name are blank
 			if (authorFirstName.getText().equals("")
 					|| authorMiddleName.getText().equals("")
 					|| authorLastName.getText().equals(""))
 				JOptionPane.showMessageDialog(null,
 						"Input a valid author name", "No Author Name",
 						JOptionPane.INFORMATION_MESSAGE);
+			
+			// checks if the text field for the author birth day are blank
 			else if (authorBDay.getText().equals("")
 					|| authorBMonth.getText().equals("")
 					|| authorBYear.getText().equals(""))
@@ -402,6 +530,9 @@ public class BookFrame extends JFrame {
 						JOptionPane.INFORMATION_MESSAGE);
 		}
 		
+		/**
+		 * 
+		 */
 		private void checkBook() {
 			if (bookTitle.getText().equals(""))
 				JOptionPane.showMessageDialog(null,
@@ -429,6 +560,9 @@ public class BookFrame extends JFrame {
 						JOptionPane.INFORMATION_MESSAGE);
 		}
 		
+		/**
+		 * 
+		 */
 		private void clearForm() {
 			authorFirstName.setText("");
 			authorMiddleName.setText("");
