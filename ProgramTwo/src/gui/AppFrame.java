@@ -16,7 +16,7 @@ public class AppFrame extends javax.swing.JFrame {
     int aBDay, aBMonth, aBYear, bPDay, bPMonth, bPYear;
     int actionPerformed;
     private static final int searchBook = 0, searchAuthor = 1, addBook = 2, addAuthor = 3, 
-            modifyBook = 4, modifyAuthor = 5, searchKeyword = 6;
+            modifyBook = 4, modifyAuthor = 5, searchKeyword = 6, deleteBook = 7;
     
     /**
      * Creates new form AppFrame
@@ -255,7 +255,13 @@ public class AppFrame extends javax.swing.JFrame {
         outputBox.setRows(5);
         jScrollPane1.setViewportView(outputBox);
 
+        buttonGroup1.add(deleteBookButton);
         deleteBookButton.setText("Delete Book");
+        deleteBookButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBookButtonActionPerformed(evt);
+            }
+        });
 
         goButton.setText("Go");
         goButton.addActionListener(new java.awt.event.ActionListener() {
@@ -508,6 +514,9 @@ public class AppFrame extends javax.swing.JFrame {
             case searchKeyword :
                 
                 break;
+            case deleteBook :
+                
+                break;
         }
     }//GEN-LAST:event_goButtonActionPerformed
 
@@ -569,6 +578,11 @@ public class AppFrame extends javax.swing.JFrame {
     private void birthYearFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_birthYearFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_birthYearFieldActionPerformed
+
+    private void deleteBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBookButtonActionPerformed
+        // TODO add your handling code here:
+        actionPerformed = deleteBook;
+    }//GEN-LAST:event_deleteBookButtonActionPerformed
 
     /**
      * @param args the command line arguments

@@ -547,8 +547,14 @@
         </Container>
         <Component class="javax.swing.JRadioButton" name="deleteBookButton">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="buttonGroup1"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Delete Book"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteBookButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="goButton">
           <Properties>
