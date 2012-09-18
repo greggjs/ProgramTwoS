@@ -9,11 +9,8 @@ public class Controller {
 	 */
 	public static void main(String[] args) throws Exception {
 	
-		BookSearch search = new BookSearch("Project2.db");
-		String text = search.authorsToString("", "",
-               "Rowling", "",
-                "", "", null);
-		System.out.println(text);
+		AppFrame f = new AppFrame();
+		f.setVisible(true);
 		
 	}
 }

@@ -513,41 +513,42 @@ public class AppFrame extends javax.swing.JFrame {
  
         switch (actionPerformed) {
                 case searchAuthor :
-                    outputBox.setText(search.authorsToString(firstNameField.getText(), midNameField.getText(),
+                    outputBox.setText(search.authorsToString(search.searchAuthor(firstNameField.getText(), midNameField.getText(),
                                     lastNameField.getText(), birthDayField.getText(),
-                                    birthMonthField.getText(), birthYearField.getText(), null));
+                                    birthMonthField.getText(), birthYearField.getText(), authorIDField.getText())));
                     break;
                 case searchBook :
-                    outputBox.setText(search.booksToString(bookTitleField.getText(), pubDayField.getText(),
-                                    pubMonthField.getText(), pubYearField.getText(), null));
+                    outputBox.setText(search.booksToString(search.searchBook(bookTitleField.getText(), pubDayField.getText(),
+                                    pubMonthField.getText(), pubYearField.getText(), bookIDField.getText())));
                     break;
                 case addBook :
-                    search.addBook(bookTitleField.getText(), Integer.parseInt(pubDayField.getText()),
-                                    Integer.parseInt(pubMonthField.getText()), Integer.parseInt(pubYearField.getText()));
+                    search.addBook(bookTitleField.getText(), Integer.parseInt(pubDayField.getText().trim()),
+                                    Integer.parseInt(pubMonthField.getText().trim()), Integer.parseInt(pubYearField.getText().trim()));
                     break;
                 case addAuthor :
                     search.addAuthor(firstNameField.getText(), midNameField.getText(),
-                                    lastNameField.getText(), Integer.parseInt(birthDayField.getText()),
-                                    Integer.parseInt(birthMonthField.getText()), Integer.parseInt(birthYearField.getText()));
+                                    lastNameField.getText(), Integer.parseInt(birthDayField.getText().trim()),
+                                    Integer.parseInt(birthMonthField.getText().trim()), Integer.parseInt(birthYearField.getText().trim()));
                     break;
                 case modifyBook :
-                        search.modifyBook(bookTitleField.getText(), Integer.parseInt(pubDayField.getText()),
-                                    Integer.parseInt(pubMonthField.getText()), Integer.parseInt(pubYearField.getText()),
-                                    Integer.parseInt(bookIDField.getText()));
-                        break;
+                	search.modifyBook(bookTitleField.getText(), Integer.parseInt(pubDayField.getText().trim()),
+                            Integer.parseInt(pubMonthField.getText().trim()), Integer.parseInt(pubYearField.getText().trim()),
+                            Integer.parseInt(bookIDField.getText().trim()));
+                    break;
                 case modifyAuthor :
-                        search.modifyAuthor(firstNameField.getText(), midNameField.getText(),
-                                    lastNameField.getText(), Integer.parseInt(birthDayField.getText()),
-                                    Integer.parseInt(birthMonthField.getText()), Integer.parseInt(birthYearField.getText()),
-                                    Integer.parseInt(authorIDField.getText()));
-                        break;
+                    search.modifyAuthor(firstNameField.getText(), midNameField.getText(),
+                    		lastNameField.getText(), Integer.parseInt(birthDayField.getText().trim()),
+                    		Integer.parseInt(birthMonthField.getText().trim()), Integer.parseInt(birthYearField.getText().trim()),
+                            Integer.parseInt(authorIDField.getText().trim()));
+                    break;
                 case searchKeyword :
-                        search.searchByKeyWord(bookTitleField.getText());
-                        break;
+                	outputBox.setText(search.searchByKeyWord(bookTitleField.getText()));
+                    break;
                 case deleteBook :
-                        search.removeBook(Integer.parseInt(bookIDField.getText()));
-                        break;
+                    search.removeBook(Integer.parseInt(bookIDField.getText()));
+                    break;
             }
+       
        
     }//GEN-LAST:event_goButtonActionPerformed
 

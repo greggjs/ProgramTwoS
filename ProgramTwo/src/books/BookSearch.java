@@ -99,9 +99,10 @@ public class BookSearch {
 	 * possible integer.
 	 */
 	public void addAuthor(String fName, String mName, String lName, int bDay, int bMonth, int bYear) throws SQLException{
-		stat.execute("INSERT INTO AUTHOR VALUES ('" + fName +
+		String query = "INSERT INTO AUTHOR VALUES ('" + fName +
 				"', '" + mName + "', '" + lName + "', " + bDay + ", " + bMonth + ", " +
-				bYear + ", NULL);");
+				bYear + ", NULL)";
+		stat.execute(query);
 	}
 
 	/**
@@ -118,12 +119,11 @@ public class BookSearch {
 	 */
 	public ArrayList<Author> searchAuthor(String firstName, String middleName, String lastName, String birthDay,
 			String birthMonth, String birthYear, String authorID) throws SQLException {
-		
 		ArrayList<Author> authors = new ArrayList<Author>();
 		String[] fields = {firstName, middleName, lastName, birthDay, birthMonth, birthYear, authorID};
 		String query = "SELECT * FROM AUTHOR";
 		for (int i = 0 ; i < fields.length ; i++)	{
-			if (fields[i] != null)	{
+			if (!(fields[i] == null || fields[i].trim().equals("")))	{
 				query += " WHERE";
 				break;
 			}
@@ -151,14 +151,13 @@ public class BookSearch {
 			andNeeded = true;
 		}
 		if (!(fields[5] == null || fields[5].trim().equals("")))	{
-			query += (andNeeded) ? " AND bYear="+fields[4] : " bYear="+fields[4];
+			query += (andNeeded) ? " AND bYear="+fields[5] : " bYear="+fields[5];
 			andNeeded = true;
 		}
 		if (!(fields[6] == null || fields[6].trim().equals("")))	{
-			query += (andNeeded) ? " AND authorID="+fields[4] : " authorID="+fields[4];
+			query += (andNeeded) ? " AND authorID="+fields[6] : " authorID="+fields[6];
 			andNeeded = true;
 		}
-		System.out.println(query);
 		ResultSet rs = stat.executeQuery(query);
 		while (rs.next()) authors.add(new Author(rs));
 
@@ -182,7 +181,7 @@ public class BookSearch {
 		ArrayList<Book> books = new ArrayList<Book>();
 		String query = "SELECT * FROM BOOK";
 		for (int i = 0 ; i < fields.length ; i++)	{
-			if (fields[i] != null)	{
+			if (!(fields[i] == null || fields[i].trim().equals("")))	{
 				query += " WHERE";
 				break;
 			}
@@ -276,14 +275,17 @@ public class BookSearch {
 		stat.execute("DELETE FROM AUTHOR WHERE authorID = '" + authorID + "'");
 	}
 	
-	public ArrayList<Book> searchByKeyWord(String keyword) throws SQLException	{
+	public String searchByKeyWord(String keyword) throws SQLException	{
 		ArrayList<Book> books = new ArrayList<Book>();
 		
 		ResultSet rs = stat.executeQuery("SELECT * FROM BOOK WHERE title LIKE '%" + keyword + "%'");
 		
 		while (rs.next()) books.add(new Book(rs));
 		
-		return books;
+		String ans = "";
+		for (Book b : books) ans += b.toString() + "\n";
+		
+		return ans;
 	}
 	
 	public void modifyBook(String title, int pDay, int pMonth,
@@ -304,23 +306,18 @@ public class BookSearch {
                     "' AND bMonth='" + bMonth + "' AND bYear='" +
                     bYear + "' WHERE bookID='" + authorID + "'");
 	}
-    public String authorsToString(String firstName, String middleName, String lastName, String birthDay,
-            String birthMonth, String birthYear, String authorID) throws SQLException{
-		String authorString ="";
-		ArrayList<Author> authors = searchAuthor(firstName, middleName, lastName, birthDay,
-		        birthMonth, birthYear, authorID);
-		for(Author a : authors) authorString += a.toString() + "\n";
-		   
-		    return authorString;
-    }
+	
+	 public String authorsToString(ArrayList<Author> authors) throws SQLException{
+         String authorString ="";
+         for(Author a : authors) authorString += a.toString() + "\n";
+            
+             return authorString;
+	 }
 
-    public String booksToString(String title, String pubDay,
-            String pubMonth, String pubYear, String bookID) throws SQLException{
-		    String bookString ="";
-		    ArrayList<Book> books = searchBook(title, pubDay,
-		            pubMonth, pubYear, bookID);
-		    for(Book b : books) bookString += b.toString() + "\n";
-		   
-		    return bookString;
-    }
+	 public String booksToString(ArrayList<Book> books) throws SQLException{
+             String bookString ="";
+             for(Book b : books) bookString += b.toString() + "\n";
+            
+             return bookString;
+	 }
 }
