@@ -4,6 +4,8 @@
  */
 package gui;
 
+import java.sql.SQLException;
+
 import books.BookSearch;
 
 /**
@@ -12,16 +14,26 @@ import books.BookSearch;
  */
 public class AppFrame extends javax.swing.JFrame {
 
-    String aFName, aMName, aLName, bTitle;
-    int aBDay, aBMonth, aBYear, bPDay, bPMonth, bPYear;
-    int actionPerformed;
+    private String aFName, aMName, aLName, bTitle;
+    private int aBDay, aBMonth, aBYear, bPDay, bPMonth, bPYear;
+    private int actionPerformed;
     private static final int searchBook = 0, searchAuthor = 1, addBook = 2, addAuthor = 3, 
             modifyBook = 4, modifyAuthor = 5, searchKeyword = 6, deleteBook = 7;
+    private BookSearch search;
     
     /**
      * Creates new form AppFrame
      */
     public AppFrame() {
+    	try {
+			search = new BookSearch("Project2.db");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         initComponents();
     }
 
@@ -266,7 +278,12 @@ public class AppFrame extends javax.swing.JFrame {
         goButton.setText("Go");
         goButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                goButtonActionPerformed(evt);
+                try {
+					goButtonActionPerformed(evt);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -487,37 +504,31 @@ public class AppFrame extends javax.swing.JFrame {
         actionPerformed = searchAuthor;
     }//GEN-LAST:event_searchAuthorsButtonActionPerformed
 
-    private void goButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goButtonActionPerformed
+    private void goButtonActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_goButtonActionPerformed
         // TODO add your handling code here:
      //   String aFName, aMName, aLName, bTitle;
      //   int aBDay, aBMonth, aBYear, bPDay, bPMonth, bPYear;        
 
-        switch (actionPerformed) {
-            case searchAuthor :
-                
-                break;
-            case searchBook :
-                
-                break;
-            case addBook :
-                
-                break;
-            case addAuthor :
-                
-                break;
-            case modifyBook :
-                
-                break;
-            case modifyAuthor :
-                
-                break;
-            case searchKeyword :
-                
-                break;
-            case deleteBook :
-                
-                break;
-        }
+    	switch (actionPerformed) {
+	        case searchAuthor :
+	            outputBox.setText(search.authorsToString(firstNameField.getText(), midNameField.getText(),
+	                            lastNameField.getText(), birthDayField.getText(),
+	                            birthMonthField.getText(), birthYearField.getText(), null));
+	            break;
+	        case searchBook :
+	            outputBox.setText(search.booksToString(bookTitleField.getText(), pubDayField.getText(),
+	                            pubMonthField.getText(), pubYearField.getText(), null));
+	            break;
+	        case addBook :
+	            search.addBook(bookTitleField.getText(), Integer.parseInt(pubDayField.getText()),
+	                            Integer.parseInt(pubMonthField.getText()), Integer.parseInt(pubYearField.getText()));
+	            break;
+	        case addAuthor :
+	            search.addAuthor(firstNameField.getText(), midNameField.getText(),
+	                            lastNameField.getText(), Integer.parseInt(birthDayField.getText()),
+	                            Integer.parseInt(birthMonthField.getText()), Integer.parseInt(birthYearField.getText()));
+	            break;      
+	    }
     }//GEN-LAST:event_goButtonActionPerformed
 
     private void searchBooksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBooksButtonActionPerformed

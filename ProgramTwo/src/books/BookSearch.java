@@ -303,4 +303,23 @@ public class BookSearch {
                     "' AND bMonth='" + bMonth + "' AND bYear='" +
                     bYear + "' WHERE bookID='" + authorID + "'");
 	}
+    public String authorsToString(String firstName, String middleName, String lastName, String birthDay,
+            String birthMonth, String birthYear, String authorID) throws SQLException{
+		String authorString ="";
+		ArrayList<Author> authors = searchAuthor(firstName, middleName, lastName, birthDay,
+		        birthMonth, birthYear, authorID);
+		for(Author a : authors) authorString += a.toString() + "\n";
+		   
+		    return authorString;
+    }
+
+    public String booksToString(String title, String pubDay,
+            String pubMonth, String pubYear, String bookID) throws SQLException{
+		    String bookString ="";
+		    ArrayList<Book> books = searchBook(title, pubDay,
+		            pubMonth, pubYear, bookID);
+		    for(Book b : books) bookString += b.toString() + "\n";
+		   
+		    return bookString;
+    }
 }
