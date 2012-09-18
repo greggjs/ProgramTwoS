@@ -325,7 +325,8 @@ public class BookFrame extends JFrame {
 
 				if (e.getSource() == addBook) {
 					// check and see if it's valid input
-					checkBook();
+					if (!checkBook()) return;
+					if (!checkAuthor()) return;
 
 					// add the book to the database
 					search.addBook(bookTitle.getText(),
@@ -350,7 +351,7 @@ public class BookFrame extends JFrame {
 				else if (e.getSource() == addAuthor) {
 
 					// check and see if it's a valid input
-					checkAuthor();
+					if(!checkAuthor()) return;
 
 					// add the author to the database
 					search.addAuthor(authorFirstName.getText(),
@@ -376,9 +377,6 @@ public class BookFrame extends JFrame {
 
 				else if (e.getSource() == searchByAuthor) {
 
-					// check and see if it's a valid author input
-					checkAuthor();
-
 					// put the search results in the proper ArrayList
 					authors = search.searchAuthor(authorFirstName.getText(),
 							authorMiddleName.getText(),
@@ -399,10 +397,7 @@ public class BookFrame extends JFrame {
 				/////////////////////////////////////
 
 				else if (e.getSource() == searchByTitle) {
-
-					// check and see if it's a valid book input
-					checkBook();
-
+					
 					// put the results in the proper ArrayList
 					books = search.searchBook(bookTitle.getText(),
 							bookPubDay.getText(), bookPubMonth.getText(),
@@ -537,68 +532,75 @@ public class BookFrame extends JFrame {
 		 * This method checks the author data inputed and returns
 		 * error messages to the user if the data is incorrect
 		 */
-		private void checkAuthor() {
+		private boolean checkAuthor() {
 
 			// checks if the text fields for the name are blank
 			if (authorFirstName.getText().equals("")
 					|| authorMiddleName.getText().equals("")
-					|| authorLastName.getText().equals(""))
+					|| authorLastName.getText().equals(""))	{
 				JOptionPane.showMessageDialog(null,
 						"Input a valid author name", "No Author Name",
 						JOptionPane.INFORMATION_MESSAGE);
+				return false;
+			}
 
 			// checks if the text field for the author birthday are blank
 			else if (authorBDay.getText().equals("")
 					|| authorBMonth.getText().equals("")
-					|| authorBYear.getText().equals(""))
+					|| authorBYear.getText().equals(""))	{
 				JOptionPane.showMessageDialog(null,
 						"Input a birthday", "No Birthday",
 						JOptionPane.INFORMATION_MESSAGE);
+				return false;
+			}
 
 			// checks if the birthday is a valid birthday
-			else if (Integer.parseInt(authorBDay.getText()) < 0
-					|| Integer.parseInt(authorBDay.getText()) > 32
-					|| Integer.parseInt(authorBMonth.getText()) < 0
-					|| Integer.parseInt(authorBMonth.getText()) > 12
-					|| Integer.parseInt(authorBYear.getText()) < 0
-					|| Integer.parseInt(authorBYear.getText()) > 2012)
+			int bDay, bMonth, bYear;
+			try{
+				bDay = (authorBDay.getText().equals("")) ? null : Integer.parseInt(authorBDay.getText());
+				bMonth = (authorBMonth.getText().equals("")) ? null : Integer.parseInt(authorBMonth.getText());
+				bYear = (authorBYear.getText().equals("")) ? null : Integer.parseInt(authorBYear.getText());
+			} catch(Exception e)	{
 				JOptionPane.showMessageDialog(null,
 						"Input a correct birthday",
 						"Incorrect Birthday",
 						JOptionPane.INFORMATION_MESSAGE);
-
-			// checks if the author ID is not empty
-			else if (authorID.getText().equals(""))
+				return false;
+			}
+			
+			if (!BookSearch.checkDate(bMonth, bDay, bYear))	{
 				JOptionPane.showMessageDialog(null,
-						"Please input a Author ID", "No Author ID",
+						"Input a correct birthday",
+						"Incorrect Birthday",
 						JOptionPane.INFORMATION_MESSAGE);
+				return false;
+			}
+			return true;
 		}
 
 		/**
 		 * This method checks the book data inputed and returns
 		 * error messages to the user if the data is incorrect
 		 */
-		private void checkBook() {
+		private boolean checkBook() {
 
 			// if the book title field is empty
-			if (bookTitle.getText().equals(""))
+			if (bookTitle.getText().equals(""))	{
 				JOptionPane.showMessageDialog(null,
 						"Input a book title", "No Book Title",
 						JOptionPane.INFORMATION_MESSAGE);
+				return false;
+			}
 
 			// if the book publish date is empty
 			else if (bookPubDay.getText().equals("")
 					|| bookPubMonth.getText().equals("")
-					|| bookPubYear.getText().equals(""))
+					|| bookPubYear.getText().equals(""))	{
 				JOptionPane.showMessageDialog(null,
 						"Input a publish date", "No Publish Day",
 						JOptionPane.INFORMATION_MESSAGE);
-
-			// if the book ID field is empty
-			else if (bookID.getText().equals(""))
-				JOptionPane.showMessageDialog(null,
-						"Please input a Book ID", "No Book ID",
-						JOptionPane.INFORMATION_MESSAGE);
+				return false;
+			}
 
 			//checking that dates are ints
 			try {
@@ -607,18 +609,22 @@ public class BookFrame extends JFrame {
 				int year = Integer.parseInt(bookPubYear.getText());
 
 				//checking that dates are real
-				if (search.checkDate(day, month, year))
+				if (BookSearch.checkDate(day, month, year))	{
 					JOptionPane.showMessageDialog(null,
 							"Input a correct publish date",
 							"Incorrect Publish Day",
 							JOptionPane.INFORMATION_MESSAGE);
+					return false;
+				}
 			} catch(NumberFormatException err) {
 				JOptionPane.showMessageDialog(null,
 						"Input an integer for dates",
 						"Input Integers for Dates",
 						JOptionPane.INFORMATION_MESSAGE);
+				return false;
 			}
 
+			return true;
 
 		}
 

@@ -46,7 +46,7 @@ public class BookSearch {
 	 * @param year
 	 * @return true if date is valid, false if invalid
 	 */
-	public boolean checkDate(int dayOfMonth, int month, int year) {
+	public static boolean checkDate(int dayOfMonth, int month, int year) {
 		
 		// Calendar starts date and month at 0
 		int calMonth = month-1;
