@@ -500,36 +500,34 @@ public class BookFrame extends JFrame {
 		 * @param authorList the search result of authors
 		 */
 		private void displayResults(ArrayList<Book> bookList,
-				ArrayList<Author> authorList) {
+                ArrayList<Author> authorList) {
 
-			String result = ""; // result stored as a single string
+        String result = ""; // result stored as a single string
 
-			// this handles displaying book results
-			if (authorList == null) {
-				// concatenates the book results into result
-				// it creates a new line after each result
-				for (int i = 0; i < bookList.size(); i++)
-					result.concat(bookList.get(i).toString()).concat("\n");
-				// displays the result to the user
-				JOptionPane.showMessageDialog(null, result, 
-						"Book Search Results", 
-						JOptionPane.INFORMATION_MESSAGE);
-			} 
+        // this handles displaying book results
+        if (authorList == null) {
+                // concatenates the book results into result
+                // it creates a new line after each result
+                for (int i = 0; i < bookList.size(); i++)
+                        result = result.concat((bookList.get(i).
+                                        toString()).concat("\n"));
+                // displays the result to the user
+                JOptionPane.showMessageDialog(null, result,
+                                "Book Search Results",
+                                JOptionPane.INFORMATION_MESSAGE);
+        }
 
-			// this handles displaying author results
-			else {
-				// concatenates the author results into result
-				// it creates a new line after each result
-				for (int i = 0; i < authorList.size(); i++)
-					result.concat(authorList.get(i).toString()).concat("\n");
-				// displays the result to the user
-				JOptionPane.showMessageDialog(null, result, 
-						"Book Search Results", 
-						JOptionPane.INFORMATION_MESSAGE);
-			}
-
-		}
-
+        // this handles displaying author results
+        else {
+                // concatenates the author results into result
+                // it creates a new line after each result
+                for (int i = 0; i < authorList.size(); i++)
+                        result = result.concat(authorList.get(i)
+                                        .toString()).concat("\n");
+                // displays the result to the user
+                JOptionPane.showMessageDialog(null, result,
+                                "Book Search Results",
+                                JOptionPane.INFORMATION_MESSAGE);
 		/**
 		 * This method checks the author data inputed and returns
 		 * error messages to the user if the data is incorrect
