@@ -73,7 +73,7 @@ public class Author implements Comparable<Author>	{
 	 * @return Formated string
 	 */
 	public String toString()	{
-		return "Name: " + getName() + " -- DOB (M-D-Y): " + getBirthDate();
+		return "Name: " + getName() + " -- DOB (M-D-Y): " + getBirthDate() + " -- ID: " + authorID;
 	}
 
 	/**

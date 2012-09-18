@@ -130,34 +130,35 @@ public class BookSearch {
 		}
 
 		boolean andNeeded = false;
-		if (!(fields[0] == null || fields[0].equals("")))	{
+		if (!(fields[0] == null || fields[0].trim().equals("")))	{
 			query += (andNeeded) ? " AND fNamee='"+fields[0]+"'" : " fName='"+fields[0]+"'";
 			andNeeded = true;
 		}
-		if (!(fields[1] == null || fields[1].equals("")))	{
+		if (!(fields[1] == null || fields[1].trim().equals("")))	{
 			query += (andNeeded) ? " AND mName='"+fields[1]+"'" : " mName='"+fields[1]+"'";
 			andNeeded = true;
 		}
-		if (!(fields[2] == null || fields[2].equals("")))	{
+		if (!(fields[2] == null || fields[2].trim().equals("")))	{
 			query += (andNeeded) ? " AND lName='"+fields[2]+"'" : " lName='"+fields[2]+"'";
 			andNeeded = true;
 		}
-		if (!(fields[3] == null || fields[3].equals("")))	{
+		if (!(fields[3] == null || fields[3].trim().equals("")))	{
 			query += (andNeeded) ? " AND bDay="+fields[3] : " bDay="+fields[3];
 			andNeeded = true;
 		}
-		if (!(fields[4] == null || fields[4].equals("")))	{
+		if (!(fields[4] == null || fields[4].trim().equals("")))	{
 			query += (andNeeded) ? " AND bMonth="+fields[4] : " bMonth="+fields[4];
 			andNeeded = true;
 		}
-		if (!(fields[5] == null || fields[5].equals("")))	{
+		if (!(fields[5] == null || fields[5].trim().equals("")))	{
 			query += (andNeeded) ? " AND bYear="+fields[4] : " bYear="+fields[4];
 			andNeeded = true;
 		}
-		if (!(fields[6] == null || fields[6].equals("")))	{
+		if (!(fields[6] == null || fields[6].trim().equals("")))	{
 			query += (andNeeded) ? " AND authorID="+fields[4] : " authorID="+fields[4];
 			andNeeded = true;
 		}
+		System.out.println(query);
 		ResultSet rs = stat.executeQuery(query);
 		while (rs.next()) authors.add(new Author(rs));
 
@@ -187,23 +188,23 @@ public class BookSearch {
 			}
 		}
 		boolean andNeeded = false;
-		if (!(fields[0] == null || fields[0].equals("")))	{
+		if (!(fields[0] == null || fields[0].trim().equals("")))	{
 			query += (andNeeded) ? " AND title='"+fields[0]+"'" : " title='"+fields[0]+"'";
 			andNeeded = true;
 		}
-		if (!(fields[1] == null || fields[1].equals("")))	{
+		if (!(fields[1] == null || fields[1].trim().equals("")))	{
 			query += (andNeeded) ? " AND pDay="+fields[1] : " pDay="+fields[1];
 			andNeeded = true;
 		}
-		if (!(fields[2] == null || fields[2].equals("")))	{
+		if (!(fields[2] == null || fields[2].trim().equals("")))	{
 			query += (andNeeded) ? " AND pMonth="+fields[2] : " pMonth="+fields[2];
 			andNeeded = true;
 		}
-		if (!(fields[3] == null || fields[3].equals("")))	{
+		if (!(fields[3] == null || fields[3].trim().equals("")))	{
 			query += (andNeeded) ? " AND pYear="+fields[3] : " pYear="+fields[3];
 			andNeeded = true;
 		}
-		if (!(fields[4] == null || fields[4].equals("")))	{
+		if (!(fields[4] == null || fields[4].trim().equals("")))	{
 			query += (andNeeded) ? " AND bookID="+fields[4] : " bookID="+fields[4];
 			andNeeded = true;
 		}

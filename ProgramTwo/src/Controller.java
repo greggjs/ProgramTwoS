@@ -1,3 +1,4 @@
+import books.BookSearch;
 import gui.*;
 
 public class Controller {
@@ -8,7 +9,11 @@ public class Controller {
 	 */
 	public static void main(String[] args) throws Exception {
 	
-		AppFrame f = new AppFrame();
-		f.setVisible(true);
+		BookSearch search = new BookSearch("Project2.db");
+		String text = search.authorsToString("", "",
+               "Rowling", "",
+                "", "", null);
+		System.out.println(text);
+		
 	}
 }

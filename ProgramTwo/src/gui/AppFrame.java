@@ -6,6 +6,8 @@ package gui;
 
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 import books.BookSearch;
 
 /**
@@ -508,27 +510,45 @@ public class AppFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
      //   String aFName, aMName, aLName, bTitle;
      //   int aBDay, aBMonth, aBYear, bPDay, bPMonth, bPYear;        
-
-    	switch (actionPerformed) {
-	        case searchAuthor :
-	            outputBox.setText(search.authorsToString(firstNameField.getText(), midNameField.getText(),
-	                            lastNameField.getText(), birthDayField.getText(),
-	                            birthMonthField.getText(), birthYearField.getText(), null));
-	            break;
-	        case searchBook :
-	            outputBox.setText(search.booksToString(bookTitleField.getText(), pubDayField.getText(),
-	                            pubMonthField.getText(), pubYearField.getText(), null));
-	            break;
-	        case addBook :
-	            search.addBook(bookTitleField.getText(), Integer.parseInt(pubDayField.getText()),
-	                            Integer.parseInt(pubMonthField.getText()), Integer.parseInt(pubYearField.getText()));
-	            break;
-	        case addAuthor :
-	            search.addAuthor(firstNameField.getText(), midNameField.getText(),
-	                            lastNameField.getText(), Integer.parseInt(birthDayField.getText()),
-	                            Integer.parseInt(birthMonthField.getText()), Integer.parseInt(birthYearField.getText()));
-	            break;      
-	    }
+ 
+        switch (actionPerformed) {
+                case searchAuthor :
+                    outputBox.setText(search.authorsToString(firstNameField.getText(), midNameField.getText(),
+                                    lastNameField.getText(), birthDayField.getText(),
+                                    birthMonthField.getText(), birthYearField.getText(), null));
+                    break;
+                case searchBook :
+                    outputBox.setText(search.booksToString(bookTitleField.getText(), pubDayField.getText(),
+                                    pubMonthField.getText(), pubYearField.getText(), null));
+                    break;
+                case addBook :
+                    search.addBook(bookTitleField.getText(), Integer.parseInt(pubDayField.getText()),
+                                    Integer.parseInt(pubMonthField.getText()), Integer.parseInt(pubYearField.getText()));
+                    break;
+                case addAuthor :
+                    search.addAuthor(firstNameField.getText(), midNameField.getText(),
+                                    lastNameField.getText(), Integer.parseInt(birthDayField.getText()),
+                                    Integer.parseInt(birthMonthField.getText()), Integer.parseInt(birthYearField.getText()));
+                    break;
+                case modifyBook :
+                        search.modifyBook(bookTitleField.getText(), Integer.parseInt(pubDayField.getText()),
+                                    Integer.parseInt(pubMonthField.getText()), Integer.parseInt(pubYearField.getText()),
+                                    Integer.parseInt(bookIDField.getText()));
+                        break;
+                case modifyAuthor :
+                        search.modifyAuthor(firstNameField.getText(), midNameField.getText(),
+                                    lastNameField.getText(), Integer.parseInt(birthDayField.getText()),
+                                    Integer.parseInt(birthMonthField.getText()), Integer.parseInt(birthYearField.getText()),
+                                    Integer.parseInt(authorIDField.getText()));
+                        break;
+                case searchKeyword :
+                        search.searchByKeyWord(bookTitleField.getText());
+                        break;
+                case deleteBook :
+                        search.removeBook(Integer.parseInt(bookIDField.getText()));
+                        break;
+            }
+       
     }//GEN-LAST:event_goButtonActionPerformed
 
     private void searchBooksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBooksButtonActionPerformed
