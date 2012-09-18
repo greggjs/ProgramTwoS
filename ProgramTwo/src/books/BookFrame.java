@@ -90,15 +90,13 @@ public class BookFrame extends JFrame {
 		addPanels();
 		connectButtons();
 		
-
-		/////////////////////////////
-		// make the JFrame visible //
-		/////////////////////////////
-
-		setVisible(true);
-		
 	}
-	public void initializeFrame()	{
+	
+	public void start()	{
+		setVisible(true);
+	}
+	
+	private void initializeFrame()	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 		setBounds(200, 200, 800, 300);
@@ -122,7 +120,7 @@ public class BookFrame extends JFrame {
 		// searchPanel holds the book and search options, which are //
 		// on the bookPanel and authorPanel respectively            //
 		//////////////////////////////////////////////////////////////
-	public void createPanels()	{
+	private void createPanels()	{
 		searchPanel = new JPanel(new GridLayout(1, 2));
 		bookPanel = new JPanel();
 		bookPanel.setLayout(null);
@@ -133,7 +131,7 @@ public class BookFrame extends JFrame {
 		///////////////////////////////////////
 		// Labels for labeling the textboxes //
 		///////////////////////////////////////
-	public void createLabels()	{
+	private void createLabels()	{
 		bookLabel1 = new JLabel("Title");
 		bookLabel2 = new JLabel("Publish Day");
 		bookLabel3 = new JLabel("Publish Month");
@@ -212,7 +210,7 @@ public class BookFrame extends JFrame {
 		///////////////////////////////////////////////////////
 		// add the labels annd textfields to the authorPanel //
 		///////////////////////////////////////////////////////
-	public void addLabelsAndTextFieldsAuthor()	{
+	private void addLabelsAndTextFieldsAuthor()	{
 		authorLabel8.setFont(bold2); // author header
 		authorPanel.add(authorLabel8);
 		authorLabel8.setBounds(140, 10, 200, 25);
