@@ -130,31 +130,31 @@ public class BookSearch {
 		}
 
 		boolean andNeeded = false;
-		if (fields[0] != null)	{
+		if (!(fields[0] == null || fields[0].equals("")))	{
 			query += (andNeeded) ? " AND fNamee='"+fields[0]+"'" : " fName='"+fields[0]+"'";
 			andNeeded = true;
 		}
-		if (fields[1] != null)	{
+		if (!(fields[1] == null || fields[1].equals("")))	{
 			query += (andNeeded) ? " AND mName='"+fields[1]+"'" : " mName='"+fields[1]+"'";
 			andNeeded = true;
 		}
-		if (fields[2] != null)	{
+		if (!(fields[2] == null || fields[2].equals("")))	{
 			query += (andNeeded) ? " AND lName='"+fields[2]+"'" : " lName='"+fields[2]+"'";
 			andNeeded = true;
 		}
-		if (fields[3] != null)	{
+		if (!(fields[3] == null || fields[3].equals("")))	{
 			query += (andNeeded) ? " AND bDay="+fields[3] : " bDay="+fields[3];
 			andNeeded = true;
 		}
-		if (fields[4] != null)	{
+		if (!(fields[4] == null || fields[4].equals("")))	{
 			query += (andNeeded) ? " AND bMonth="+fields[4] : " bMonth="+fields[4];
 			andNeeded = true;
 		}
-		if (fields[5] != null)	{
+		if (!(fields[5] == null || fields[5].equals("")))	{
 			query += (andNeeded) ? " AND bYear="+fields[4] : " bYear="+fields[4];
 			andNeeded = true;
 		}
-		if (fields[6] != null)	{
+		if (!(fields[6] == null || fields[6].equals("")))	{
 			query += (andNeeded) ? " AND authorID="+fields[4] : " authorID="+fields[4];
 			andNeeded = true;
 		}
@@ -187,23 +187,23 @@ public class BookSearch {
 			}
 		}
 		boolean andNeeded = false;
-		if (fields[0] != null)	{
+		if (!(fields[0] == null || fields[0].equals("")))	{
 			query += (andNeeded) ? " AND title='"+fields[0]+"'" : " title='"+fields[0]+"'";
 			andNeeded = true;
 		}
-		if (fields[1] != null)	{
+		if (!(fields[1] == null || fields[1].equals("")))	{
 			query += (andNeeded) ? " AND pDay="+fields[1] : " pDay="+fields[1];
 			andNeeded = true;
 		}
-		if (fields[2] != null)	{
+		if (!(fields[2] == null || fields[2].equals("")))	{
 			query += (andNeeded) ? " AND pMonth="+fields[2] : " pMonth="+fields[2];
 			andNeeded = true;
 		}
-		if (fields[3] != null)	{
+		if (!(fields[3] == null || fields[3].equals("")))	{
 			query += (andNeeded) ? " AND pYear="+fields[3] : " pYear="+fields[3];
 			andNeeded = true;
 		}
-		if (fields[4] != null)	{
+		if (!(fields[4] == null || fields[4].equals("")))	{
 			query += (andNeeded) ? " AND bookID="+fields[4] : " bookID="+fields[4];
 			andNeeded = true;
 		}

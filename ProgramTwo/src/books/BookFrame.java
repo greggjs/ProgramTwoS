@@ -384,6 +384,7 @@ public class BookFrame extends JFrame {
 							authorBMonth.getText(), authorBYear.getText(),
 							authorID.getText());
 
+					for (Author a : authors) System.out.println(a);
 					// display the results to the user
 					displayResults(null, authors);
 
@@ -403,6 +404,7 @@ public class BookFrame extends JFrame {
 							bookPubDay.getText(), bookPubMonth.getText(),
 							bookPubYear.getText(), bookID.getText());
 
+					for (Book b : books) System.out.println(b);
 					// display the results to the user
 					displayResults(books, null);
 
