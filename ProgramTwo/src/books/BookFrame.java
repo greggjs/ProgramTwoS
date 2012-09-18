@@ -528,11 +528,13 @@ public class BookFrame extends JFrame {
                 JOptionPane.showMessageDialog(null, result,
                                 "Book Search Results",
                                 JOptionPane.INFORMATION_MESSAGE);
+        }  
+       }
 		/**
 		 * This method checks the author data inputed and returns
 		 * error messages to the user if the data is incorrect
 		 */
-		private boolean checkAuthor() {
+	private boolean checkAuthor() {
 
 			// checks if the text fields for the name are blank
 			if (authorFirstName.getText().equals("")
