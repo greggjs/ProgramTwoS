@@ -28,6 +28,24 @@ public class BookFrame extends JFrame {
 	JButton modifyBook;
 	JButton modifyAuthor;
 
+	JLabel bookLabel1;
+	JLabel bookLabel2;
+	JLabel bookLabel3;
+	JLabel bookLabel4;
+	JLabel bookLabel5;
+	JLabel bookLabel6;
+	JLabel authorLabel1;
+	JLabel authorLabel2;
+	JLabel authorLabel3;
+	JLabel authorLabel4;
+	JLabel authorLabel5;
+	JLabel authorLabel6;
+	JLabel authorLabel7;
+	JLabel authorLabel8;
+	
+	JPanel bookPanel;
+	JPanel authorPanel;
+	
 	JTextField bookTitle; // text fields for book search
 	JTextField bookPubDay;
 	JTextField bookPubMonth;
@@ -40,6 +58,8 @@ public class BookFrame extends JFrame {
 	JTextField authorBMonth;
 	JTextField authorBYear;
 	JTextField authorID;
+	
+	Font bold1, bold2;
 
 	BookSearch search; // object to search through the database
 
@@ -51,74 +71,99 @@ public class BookFrame extends JFrame {
 	 * 
 	 * @throws Exception
 	 */
-	public BookFrame() throws Exception {
+	public BookFrame(String databaseLoc) throws Exception {
 
+		super("Book & Author Search");
 		/////////////////////////////////////////////////
 		// construct a new frame, set general settings //
 		/////////////////////////////////////////////////
+		initializeFrame();
+		connectToDatabase(databaseLoc);
+		createPanels();
+		createLabels();
+		formatAuthorAndTitles();
+		createTextFields();
+		addLabelsAndTextFieldsBook();
+		addLabelsAndTextFieldsAuthor();
+		addPanelsToSearch();
+		addButtons();
+		addPanels();
+		connectButtons();
+		
 
-		super("Book & Author Search");
+		/////////////////////////////
+		// make the JFrame visible //
+		/////////////////////////////
+
+		setVisible(true);
+		
+	}
+	public void initializeFrame()	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 		setBounds(200, 200, 800, 300);
 		setResizable(false);
-
+	}
+	
 		///////////////////////////////////////////
 		// make an object to search our database //
 		///////////////////////////////////////////
-
+	private void connectToDatabase(String databaseLoc)	{
 		try {
-			search = new BookSearch("Project2.db");
-		} catch (SQLException err) { // catches if it doesn't exist
+			search = new BookSearch(databaseLoc);
+		} catch (Exception err) { // catches if it doesn't exist
 			JOptionPane.showMessageDialog(null, "Cannot Connect " +
 					" to database specified.", "Database Does Not"
 							+ " Exist", JOptionPane.INFORMATION_MESSAGE);
 			System.exit(-1); // closes as well
 		}
-
+	}
 		//////////////////////////////////////////////////////////////
 		// searchPanel holds the book and search options, which are //
 		// on the bookPanel and authorPanel respectively            //
 		//////////////////////////////////////////////////////////////
-
+	public void createPanels()	{
 		searchPanel = new JPanel(new GridLayout(1, 2));
-		JPanel bookPanel = new JPanel();
+		bookPanel = new JPanel();
 		bookPanel.setLayout(null);
-		JPanel authorPanel = new JPanel();
+		authorPanel = new JPanel();
 		authorPanel.setLayout(null);
-
+	}
+	
 		///////////////////////////////////////
 		// Labels for labeling the textboxes //
 		///////////////////////////////////////
-
-		JLabel bookLabel1 = new JLabel("Title");
-		JLabel bookLabel2 = new JLabel("Publish Day");
-		JLabel bookLabel3 = new JLabel("Publish Month");
-		JLabel bookLabel4 = new JLabel("Publish Year");
-		JLabel bookLabel5 = new JLabel("Book ID");
-		JLabel bookLabel6 = new JLabel("Book");
-		JLabel authorLabel1 = new JLabel("First Name");
-		JLabel authorLabel2 = new JLabel("Middle Name");
-		JLabel authorLabel3 = new JLabel("Last Name");
-		JLabel authorLabel4 = new JLabel("Birth Day");
-		JLabel authorLabel5 = new JLabel("Birth Month");
-		JLabel authorLabel6 = new JLabel("Birth Year");
-		JLabel authorLabel7 = new JLabel("Author ID");
-		JLabel authorLabel8 = new JLabel("Author");
-
+	public void createLabels()	{
+		bookLabel1 = new JLabel("Title");
+		bookLabel2 = new JLabel("Publish Day");
+		bookLabel3 = new JLabel("Publish Month");
+		bookLabel4 = new JLabel("Publish Year");
+		bookLabel5 = new JLabel("Book ID");
+		bookLabel6 = new JLabel("Book");
+		authorLabel1 = new JLabel("First Name");
+		authorLabel2 = new JLabel("Middle Name");
+		authorLabel3 = new JLabel("Last Name");
+		authorLabel4 = new JLabel("Birth Day");
+		authorLabel5 = new JLabel("Birth Month");
+		authorLabel6 = new JLabel("Birth Year");
+		authorLabel7 = new JLabel("Author ID");
+		authorLabel8 = new JLabel("Author");
+	}
+	
 		///////////////////////////////////////////////////
 		// fonts to make the author and book titles bold //
 		///////////////////////////////////////////////////
-
-		Font bold1 = new Font(bookLabel6.getFont().getName(),
+	private void formatAuthorAndTitles()	{
+		bold1 = new Font(bookLabel6.getFont().getName(),
 				Font.BOLD, bookLabel6.getFont().getSize());
-		Font bold2 = new Font(authorLabel8.getFont().getName(),
+		bold2 = new Font(authorLabel8.getFont().getName(),
 				Font.BOLD, authorLabel8.getFont().getSize());
-
+	}
+	
 		///////////////////////////////////////////////////////////
 		// text fields for getting the information from the user //
 		///////////////////////////////////////////////////////////
-
+	private void createTextFields()	{
 		bookTitle = new JTextField(); // books 
 		bookPubDay = new JTextField();
 		bookPubMonth = new JTextField();
@@ -131,11 +176,12 @@ public class BookFrame extends JFrame {
 		authorBMonth = new JTextField();
 		authorBYear = new JTextField();
 		authorID = new JTextField();
-
+	}
+	
 		////////////////////////////////////////////////////
 		// add the labels and textfields to the bookPanel //
 		////////////////////////////////////////////////////
-
+	private void addLabelsAndTextFieldsBook()	{
 		bookLabel6.setFont(bold1); // book header
 		bookPanel.add(bookLabel6); 
 		bookLabel6.setBounds(140, 10, 200, 25);
@@ -162,11 +208,11 @@ public class BookFrame extends JFrame {
 		bookLabel5.setBounds(10, 135, 200, 25);
 		bookPanel.add(bookID);
 		bookID.setBounds(8, 160, 200, 25);
-
+	}
 		///////////////////////////////////////////////////////
 		// add the labels annd textfields to the authorPanel //
 		///////////////////////////////////////////////////////
-
+	public void addLabelsAndTextFieldsAuthor()	{
 		authorLabel8.setFont(bold2); // author header
 		authorPanel.add(authorLabel8);
 		authorLabel8.setBounds(140, 10, 200, 25);
@@ -201,18 +247,20 @@ public class BookFrame extends JFrame {
 		authorLabel7.setBounds(10, 135, 200, 25);
 		authorPanel.add(authorID);
 		authorID.setBounds(8, 160, 200, 25);
-
+	}
+	
 		///////////////////////////////////////////
 		// add the two panels to the searchPanel //
 		///////////////////////////////////////////
-
+	private void addPanelsToSearch()	{
 		searchPanel.add(bookPanel);
 		searchPanel.add(authorPanel);
-
+	}
+	
 		////////////////////////////
 		// initialize all buttons //
 		////////////////////////////
-
+	private void addButtons()	{
 		buttonPanel = new JPanel(new GridLayout(3, 3));
 		clearForm = new JButton("Clear Form");
 		addBook = new JButton("Add Book");
@@ -223,11 +271,10 @@ public class BookFrame extends JFrame {
 		searchByKeyword = new JButton("Search by Keyword");
 		modifyBook = new JButton("Modify Book...");
 		modifyAuthor = new JButton("Modify Author...");
-
+	
 		//////////////////////////
 		// add buttons to panel //
 		//////////////////////////
-
 		buttonPanel.add(addBook);
 		buttonPanel.add(addAuthor);
 		buttonPanel.add(removeBook);
@@ -237,18 +284,19 @@ public class BookFrame extends JFrame {
 		buttonPanel.add(modifyBook);
 		buttonPanel.add(modifyAuthor);
 		buttonPanel.add(clearForm);
-
+	}
+	
 		////////////////////////////////
 		// add the panel to the frame //
 		////////////////////////////////
-
-		this.add(searchPanel, BorderLayout.CENTER);
-		this.add(buttonPanel, BorderLayout.SOUTH);
-
+	private void addPanels()	{
+		add(searchPanel, BorderLayout.CENTER);
+		add(buttonPanel, BorderLayout.SOUTH);
+	}
 		///////////////////////////////////////////////////
 		// connect all the buttons to the ActionListener //
 		///////////////////////////////////////////////////
-
+	private void connectButtons()	{
 		Click button = new Click();
 		clearForm.addActionListener(button);
 		addBook.addActionListener(button);
@@ -259,12 +307,6 @@ public class BookFrame extends JFrame {
 		searchByKeyword.addActionListener(button);
 		modifyBook.addActionListener(button);
 		modifyAuthor.addActionListener(button);
-
-		/////////////////////////////
-		// make the JFrame visible //
-		/////////////////////////////
-
-		setVisible(true);
 
 	}
 

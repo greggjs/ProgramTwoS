@@ -10,6 +10,6 @@ public class Controller {
 	 */
 	public static void main(String[] args) throws Exception {
 	
-		new BookFrame();
+		new BookFrame("Project2.db");
 	}
 }
