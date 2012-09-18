@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-
-import books.*;
+import gui.*;
 
 public class Controller {
 
@@ -10,7 +8,7 @@ public class Controller {
 	 */
 	public static void main(String[] args) throws Exception {
 	
-		BookFrame f = new BookFrame("Project2.db");
-		f.start();
+		AppFrame f = new AppFrame();
+		f.setVisible(true);
 	}
 }
