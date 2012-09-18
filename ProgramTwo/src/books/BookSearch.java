@@ -274,4 +274,14 @@ public class BookSearch {
 		
 		stat.execute("DELETE FROM AUTHOR WHERE authorID = '" + authorID + "'");
 	}
+	
+	public ArrayList<Book> searchByKeyWord(String keyword) throws SQLException	{
+		ArrayList<Book> books = new ArrayList<Book>();
+		
+		ResultSet rs = stat.executeQuery("SELECT * FROM BOOK WHERE title LIKE '%" + keyword + "%'");
+		
+		while (rs.next()) books.add(new Book(rs));
+		
+		return books;
+	}
 }
