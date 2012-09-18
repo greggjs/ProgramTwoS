@@ -17,8 +17,18 @@ public class Author implements Comparable<Author>	{
 	private int bMonth, bDay, bYear;
 	private int authorID;
 
+	public Author(String fName, String mName, String lName, int bDay, int bMonth, int bYear, int authorID)	{
+		this.fName = fName;
+		this.mName = mName;
+		this.lName = lName;
+		this.bDay = bDay;
+		this.bMonth = bMonth;
+		this.bYear = bYear;
+		this.authorID = authorID;
+	}
+	
 	/**
-	 * Creates an object of type Author
+	 * Creates an object of type Author from ResultSet
 	 * @param rs A ResultSet containing an Author entry in a database
 	 * @throws SQLException May result from the ResultSet not containing an entry for Author
 	 */

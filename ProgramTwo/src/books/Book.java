@@ -15,6 +15,14 @@ public class Book implements Comparable<Book>	{
 	private int pMonth, pDay, pYear;
 	private int bookID;
 
+	public Book(String title, int pMonth, int pDay, int pYear, int bookID)	{
+		this.title = title;
+		this.pMonth = pMonth;
+		this.pDay = pDay;
+		this.pYear = pYear;
+		this.bookID = bookID;
+	}
+	
 	/**
 	 * Creates an object of type Book
 	 * @param rs A ResultSet containing a Book entry in a database
