@@ -284,4 +284,23 @@ public class BookSearch {
 		
 		return books;
 	}
+	
+	public void modifyBook(String title, int pDay, int pMonth,
+            int pYear, int bookID) throws SQLException {
+		stat.execute("UPDATE BOOK SET title='" + title +
+                    "' AND pDay='" + pDay + "' AND pMonth='" +
+                    pMonth + "' AND pYear='" + pYear +
+                    "' WHERE bookID='" + bookID + "'");
+	}
+
+
+
+	public void modifyAuthor(String fName, String mName, String lName,
+            int bDay, int bMonth, int bYear, int authorID) throws SQLException {
+		stat.execute("UPDATE AUTHOR SET fName='" + fName +
+                    "' AND mName='" + mName + "' AND lName='" +
+                    lName + "' AND bDay='" + bDay +
+                    "' AND bMonth='" + bMonth + "' AND bYear='" +
+                    bYear + "' WHERE bookID='" + authorID + "'");
+	}
 }
