@@ -4,6 +4,8 @@
  */
 package gui;
 
+import books.BookSearch;
+
 /**
  *
  * @author Kyle
@@ -98,7 +100,19 @@ public class AppFrame extends javax.swing.JFrame {
 
         jLabel1.setText("/");
 
+        pubDayField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pubDayFieldActionPerformed(evt);
+            }
+        });
+
         jLabel2.setText("/");
+
+        pubYearField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pubYearFieldActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Name");
 
@@ -115,9 +129,37 @@ public class AppFrame extends javax.swing.JFrame {
 
         jLabel9.setText("/");
 
+        birthDayField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                birthDayFieldActionPerformed(evt);
+            }
+        });
+
         birthYearField.setText(" ");
+        birthYearField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                birthYearFieldActionPerformed(evt);
+            }
+        });
+
+        lastNameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lastNameFieldActionPerformed(evt);
+            }
+        });
 
         firstNameField.setText(" ");
+        firstNameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                firstNameFieldActionPerformed(evt);
+            }
+        });
+
+        midNameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                midNameFieldActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("/");
 
@@ -413,8 +455,7 @@ public class AppFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
      //   String aFName, aMName, aLName, bTitle;
      //   int aBDay, aBMonth, aBYear, bPDay, bPMonth, bPYear;        
-        
-        
+
         switch (actionPerformed) {
             case searchAuthor :
                 
@@ -470,6 +511,34 @@ public class AppFrame extends javax.swing.JFrame {
         actionPerformed = searchKeyword;        
         // TODO add your handling code here:
     }//GEN-LAST:event_searchKeywordButtonActionPerformed
+
+    private void pubDayFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pubDayFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pubDayFieldActionPerformed
+
+    private void pubYearFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pubYearFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pubYearFieldActionPerformed
+
+    private void lastNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastNameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lastNameFieldActionPerformed
+
+    private void firstNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstNameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_firstNameFieldActionPerformed
+
+    private void midNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_midNameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_midNameFieldActionPerformed
+
+    private void birthDayFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_birthDayFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_birthDayFieldActionPerformed
+
+    private void birthYearFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_birthYearFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_birthYearFieldActionPerformed
 
     /**
      * @param args the command line arguments
