@@ -31,7 +31,7 @@ public class AppFrame extends javax.swing.JFrame {
 			search = new BookSearch("Project2.db");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			JOptionPane.showMessageDialog(this,"Cannot use sqlite");
+			JOptionPane.showMessageDialog(this,"Cannot use sqlite\nEnsure that JDBC is on Java Build Path");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block\
 			JOptionPane.showMessageDialog(this,"Cannot connect to database");
