@@ -294,6 +294,12 @@ public class BookSearch {
 		stat.execute("DELETE FROM AUTHOR WHERE authorID = '" + authorID + "'");
 	}
 	
+	/**
+	 * Searches titles for a keyword
+	 * @param keyword Word to search titles for
+	 * @return String of books representing books containing keywords
+	 * @throws SQLException
+	 */
 	public String searchByKeyWord(String keyword) throws SQLException	{
 		ArrayList<Book> books = new ArrayList<Book>();
 		
@@ -307,6 +313,15 @@ public class BookSearch {
 		return ans;
 	}
 	
+	/**
+	 * Changes values for a book entry
+	 * @param title new title
+	 * @param pDay new publish day
+	 * @param pMonth new publish month
+	 * @param pYear new publish year
+	 * @param bookID ID for book to change
+	 * @throws SQLException
+	 */
 	public void modifyBook(String title, int pDay, int pMonth,
             int pYear, int bookID) throws SQLException {
 		stat.execute("UPDATE BOOK SET title='" + title +
@@ -316,7 +331,17 @@ public class BookSearch {
 	}
 
 
-
+	/**
+	 * Changes values for an author entry
+	 * @param fName new first name
+	 * @param mName new middle name
+	 * @param lName new last name
+	 * @param bDay new birth day
+	 * @param bMonth new birth month
+	 * @param bYear new birth year
+	 * @param authorID ID for author to be changed
+	 * @throws SQLException
+	 */
 	public void modifyAuthor(String fName, String mName, String lName,
             int bDay, int bMonth, int bYear, int authorID) throws SQLException {
 		stat.execute("UPDATE AUTHOR SET fName='" + fName +
@@ -326,6 +351,12 @@ public class BookSearch {
                     bYear + "' WHERE authorID='" + authorID + "'");
 	}
 	
+	/**
+	 * Converts an ArrayList<Author> to a formatted string
+	 * @param authors
+	 * @return
+	 * @throws SQLException
+	 */
 	 public String authorsToString(ArrayList<Author> authors) throws SQLException{
          String authorString ="";
          for(Author a : authors) authorString += a.toString() + "\n";
@@ -333,6 +364,12 @@ public class BookSearch {
              return authorString;
 	 }
 
+	 /**
+	  * Convert an ArrayList<Book> to a formatted string
+	  * @param books
+	  * @return
+	  * @throws SQLException
+	  */
 	 public String booksToString(ArrayList<Book> books) throws SQLException{
              String bookString ="";
              for(Book b : books) bookString += b.toString() + "\n";
