@@ -553,31 +553,59 @@ public class AppFrame extends javax.swing.JFrame {
                                     bPMonth, bPYear, bookID)));
                     break;
                 case addBook :
-                    search.addBook(bTitle, Integer.parseInt(bPDay), Integer.parseInt(bPMonth), Integer.parseInt(bPYear),
-                                    		Integer.parseInt(bookID),Integer.parseInt(authorID));
-                    outputBox.setText("");
+                	try{
+	                    search.addBook(bTitle, Integer.parseInt(bPDay), Integer.parseInt(bPMonth), Integer.parseInt(bPYear),
+	                                    		Integer.parseInt(bookID),Integer.parseInt(authorID));
+	                    outputBox.setText("");
+                	}catch(SQLException e)	{
+                		e.printStackTrace();
+                		JOptionPane.showMessageDialog(this, "SQL ERROR!\nIs the Book ID already in use?");
+                	}catch(NumberFormatException e)	{
+                		e.printStackTrace();
+                		JOptionPane.showMessageDialog(this,"Some of your numbers aren't numbers...");
+                	}
                     break;
                 case addAuthor :
-                    search.addAuthor(aFName, aMName, aLName, Integer.parseInt(aBDay), Integer.parseInt(aBMonth), 
-                    		Integer.parseInt(aBYear));
-                    outputBox.setText("");
+                	try{
+	                    search.addAuthor(aFName, aMName, aLName, Integer.parseInt(aBDay), Integer.parseInt(aBMonth), 
+	                    		Integer.parseInt(aBYear));
+	                    outputBox.setText("");
+                	} catch(SQLException e)	{
+                		e.printStackTrace();
+                		JOptionPane.showMessageDialog(this, "SQL ERROR!\n Is the Author ID already in use?");
+                	}
                     break;
                 case modifyBook :
-                	search.modifyBook(bTitle, Integer.parseInt(bPDay), Integer.parseInt(bPMonth), Integer.parseInt(bPYear),
-                            Integer.parseInt(bookID));
-                    outputBox.setText("");
+                	try{
+	                	search.modifyBook(bTitle, Integer.parseInt(bPDay), Integer.parseInt(bPMonth), Integer.parseInt(bPYear),
+	                            Integer.parseInt(bookID));
+	                    outputBox.setText("");
+                	}catch(NumberFormatException e)	{
+                		e.printStackTrace();
+                		JOptionPane.showMessageDialog(this, "Some of your numbers aren't numbers...");
+                	}
                     break;
                 case modifyAuthor :
-                    search.modifyAuthor(aFName, aMName, aLName, Integer.parseInt(aBDay), Integer.parseInt(aBMonth), Integer.parseInt(aBYear),
-                            Integer.parseInt(authorID));
-                    outputBox.setText("");
+                	try{
+	                    search.modifyAuthor(aFName, aMName, aLName, Integer.parseInt(aBDay), Integer.parseInt(aBMonth), Integer.parseInt(aBYear),
+	                            Integer.parseInt(authorID));
+	                    outputBox.setText("");
+	               	}catch(NumberFormatException e)	{
+                		e.printStackTrace();
+                		JOptionPane.showMessageDialog(this, "Some of your numbers aren't numbers...");                		
+                	}
                     break;
                 case searchKeyword :
                 	outputBox.setText(search.searchByKeyWord(bTitle));
                     break;
                 case deleteBook :
-                    search.removeBook(Integer.parseInt(bookID));
-                    outputBox.setText("");
+                	try{
+	                    search.removeBook(Integer.parseInt(bookID));
+	                    outputBox.setText("");
+                	}catch(NumberFormatException e)	{
+                		e.printStackTrace();
+                		JOptionPane.showMessageDialog(this, "Some of your numbers aren't numbers...");                		
+                	}
                     break;
             }
        
