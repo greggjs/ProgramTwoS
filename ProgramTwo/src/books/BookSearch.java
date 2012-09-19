@@ -106,113 +106,131 @@ public class BookSearch {
 		stat.execute(query);
 	}
 
-	/**
-	 * Search for authors that meet a set of criteria. To not specify a field, use null
-	 * @param firstName
-	 * @param middleName
-	 * @param lastName
-	 * @param birthDay
-	 * @param birthMonth
-	 * @param birthYear
-	 * @param authorID
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Author> searchAuthor(String firstName, String middleName, String lastName, String birthDay,
-			String birthMonth, String birthYear, String authorID) throws SQLException {
-		ArrayList<Author> authors = new ArrayList<Author>();
-		String[] fields = {firstName, middleName, lastName, birthDay, birthMonth, birthYear, authorID};
-		String query = "SELECT * FROM AUTHOR";
-		for (int i = 0 ; i < fields.length ; i++)	{
-			if (!(fields[i] == null || fields[i].trim().equals("")))	{
-				query += " WHERE";
-				break;
-			}
-		}
+    /**
+     * Search for authors that meet a set of criteria. To not specify a field, use null
+     * @param firstName
+     * @param middleName
+     * @param lastName
+     * @param birthDay
+     * @param birthMonth
+     * @param birthYear
+     * @param authorID
+     * @return
+     * @throws SQLException
+     */
+    public String searchAuthor(String firstName, String middleName, String lastName, String birthDay,
+            String birthMonth, String birthYear, String authorID) throws SQLException {
+        String result = "";
+        ArrayList<Author> authors = new ArrayList<Author>();
+        String[] fields = {firstName, middleName, lastName, birthDay, birthMonth, birthYear, authorID};
+        String query = "SELECT * FROM AUTHOR";
+        for (int i = 0 ; i < fields.length ; i++)    {
+            if (!(fields[i] == null || fields[i].trim().equals("")))    {
+                query += " WHERE";
+                break;
+            }
+        }
 
-		boolean andNeeded = false;
-		if (!(fields[0] == null || fields[0].trim().equals("")))	{
-			query += (andNeeded) ? " AND fNamee='"+fields[0]+"'" : " fName='"+fields[0]+"'";
-			andNeeded = true;
-		}
-		if (!(fields[1] == null || fields[1].trim().equals("")))	{
-			query += (andNeeded) ? " AND mName='"+fields[1]+"'" : " mName='"+fields[1]+"'";
-			andNeeded = true;
-		}
-		if (!(fields[2] == null || fields[2].trim().equals("")))	{
-			query += (andNeeded) ? " AND lName='"+fields[2]+"'" : " lName='"+fields[2]+"'";
-			andNeeded = true;
-		}
-		if (!(fields[3] == null || fields[3].trim().equals("")))	{
-			query += (andNeeded) ? " AND bDay="+fields[3] : " bDay="+fields[3];
-			andNeeded = true;
-		}
-		if (!(fields[4] == null || fields[4].trim().equals("")))	{
-			query += (andNeeded) ? " AND bMonth="+fields[4] : " bMonth="+fields[4];
-			andNeeded = true;
-		}
-		if (!(fields[5] == null || fields[5].trim().equals("")))	{
-			query += (andNeeded) ? " AND bYear="+fields[5] : " bYear="+fields[5];
-			andNeeded = true;
-		}
-		if (!(fields[6] == null || fields[6].trim().equals("")))	{
-			query += (andNeeded) ? " AND authorID="+fields[6] : " authorID="+fields[6];
-			andNeeded = true;
-		}
-		ResultSet rs = stat.executeQuery(query);
-		while (rs.next()) authors.add(new Author(rs));
+        boolean andNeeded = false;
+        if (!(fields[0] == null || fields[0].trim().equals("")))    {
+            query += (andNeeded) ? " AND fNamee='"+fields[0]+"'" : " fName='"+fields[0]+"'";
+            andNeeded = true;
+        }
+        if (!(fields[1] == null || fields[1].trim().equals("")))    {
+            query += (andNeeded) ? " AND mName='"+fields[1]+"'" : " mName='"+fields[1]+"'";
+            andNeeded = true;
+        }
+        if (!(fields[2] == null || fields[2].trim().equals("")))    {
+            query += (andNeeded) ? " AND lName='"+fields[2]+"'" : " lName='"+fields[2]+"'";
+            andNeeded = true;
+        }
+        if (!(fields[3] == null || fields[3].trim().equals("")))    {
+            query += (andNeeded) ? " AND bDay="+fields[3] : " bDay="+fields[3];
+            andNeeded = true;
+        }
+        if (!(fields[4] == null || fields[4].trim().equals("")))    {
+            query += (andNeeded) ? " AND bMonth="+fields[4] : " bMonth="+fields[4];
+            andNeeded = true;
+        }
+        if (!(fields[5] == null || fields[5].trim().equals("")))    {
+            query += (andNeeded) ? " AND bYear="+fields[5] : " bYear="+fields[5];
+            andNeeded = true;
+        }
+        if (!(fields[6] == null || fields[6].trim().equals("")))    {
+            query += (andNeeded) ? " AND authorID="+fields[6] : " authorID="+fields[6];
+            andNeeded = true;
+        }
+        ResultSet rs = stat.executeQuery(query);
+        while (rs.next()) authors.add(new Author(rs)); //fills ArrayList
+        
+        ArrayList<Book> authorsBooks = new ArrayList<Book>();
+        for (int i = 0; i < authors.size() ; i++)    {
+            result += authors.get(i).toString() + "\n";
+            result += "Books written by author:\n";
+            authorsBooks = getAuthorsBooks(authors.get(i).authorID);
+            result += booksToString(authorsBooks) + "\n";
+        }
 
-		return authors;
-	}
+        return result;
+    }
 
-	/**	 
-	 * Searches for all books that meet a set of criteria. To leave a field empty, pass null
-	 * @param title
-	 * @param pDay
-	 * @param pMonth
-	 * @param pYear
-	 * @param bookID
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Book> searchBook(String title, String pDay, String pMonth, String pYear, 
-			String bookID) throws SQLException {
-		
-		String[] fields = {title, pDay, pMonth, pYear, bookID};
-		ArrayList<Book> books = new ArrayList<Book>();
-		String query = "SELECT * FROM BOOK";
-		for (int i = 0 ; i < fields.length ; i++)	{
-			if (!(fields[i] == null || fields[i].trim().equals("")))	{
-				query += " WHERE";
-				break;
-			}
-		}
-		boolean andNeeded = false;
-		if (!(fields[0] == null || fields[0].trim().equals("")))	{
-			query += (andNeeded) ? " AND title='"+fields[0]+"'" : " title='"+fields[0]+"'";
-			andNeeded = true;
-		}
-		if (!(fields[1] == null || fields[1].trim().equals("")))	{
-			query += (andNeeded) ? " AND pDay="+fields[1] : " pDay="+fields[1];
-			andNeeded = true;
-		}
-		if (!(fields[2] == null || fields[2].trim().equals("")))	{
-			query += (andNeeded) ? " AND pMonth="+fields[2] : " pMonth="+fields[2];
-			andNeeded = true;
-		}
-		if (!(fields[3] == null || fields[3].trim().equals("")))	{
-			query += (andNeeded) ? " AND pYear="+fields[3] : " pYear="+fields[3];
-			andNeeded = true;
-		}
-		if (!(fields[4] == null || fields[4].trim().equals("")))	{
-			query += (andNeeded) ? " AND bookID="+fields[4] : " bookID="+fields[4];
-			andNeeded = true;
-		}
-		ResultSet rs = stat.executeQuery(query);
-		while (rs.next()) books.add(new Book(rs));
-		return books;
-	}
+    /**     
+     * Searches for all books that meet a set of criteria. To leave a field empty, pass null
+     * @param title
+     * @param pDay
+     * @param pMonth
+     * @param pYear
+     * @param bookID
+     * @return
+     * @throws SQLException
+     */
+    public String searchBook(String title, String pDay, String pMonth, String pYear, 
+            String bookID) throws SQLException {
+        String result = "";
+        String[] fields = {title, pDay, pMonth, pYear, bookID};
+        ArrayList<Book> books = new ArrayList<Book>();
+        String query = "SELECT * FROM BOOK";
+        for (int i = 0 ; i < fields.length ; i++)    {
+            if (!(fields[i] == null || fields[i].trim().equals("")))    {
+                query += " WHERE";
+                break;
+            }
+        }
+        boolean andNeeded = false;
+        if (!(fields[0] == null || fields[0].trim().equals("")))    {
+            query += (andNeeded) ? " AND title='"+fields[0]+"'" : " title='"+fields[0]+"'";
+            andNeeded = true;
+        }
+        if (!(fields[1] == null || fields[1].trim().equals("")))    {
+            query += (andNeeded) ? " AND pDay="+fields[1] : " pDay="+fields[1];
+            andNeeded = true;
+        }
+        if (!(fields[2] == null || fields[2].trim().equals("")))    {
+            query += (andNeeded) ? " AND pMonth="+fields[2] : " pMonth="+fields[2];
+            andNeeded = true;
+        }
+        if (!(fields[3] == null || fields[3].trim().equals("")))    {
+            query += (andNeeded) ? " AND pYear="+fields[3] : " pYear="+fields[3];
+            andNeeded = true;
+        }
+        if (!(fields[4] == null || fields[4].trim().equals("")))    {
+            query += (andNeeded) ? " AND bookID="+fields[4] : " bookID="+fields[4];
+            andNeeded = true;
+        }
+        ResultSet rs = stat.executeQuery(query);
+        while (rs.next()) books.add(new Book(rs));
+        
+        ArrayList<Author> booksAuthors = new ArrayList<Author>();
+        for (int i = 0; i < books.size() ; i++)    {
+            result += books.get(i).toString() + "\n";
+            result += "Authors of this Book:\n";
+            booksAuthors = getBookAuthors(books.get(i).bookID);
+            result += authorsToString(booksAuthors) + "\n";
+        }
 
+        
+        return result;
+    }
 	/**
 	 * Returns all of the authors for a book given the book's ID
 	 * @param bookID
@@ -292,8 +310,8 @@ public class BookSearch {
 	public void modifyBook(String title, int pDay, int pMonth,
             int pYear, int bookID) throws SQLException {
 		stat.execute("UPDATE BOOK SET title='" + title +
-                    "' AND pDay='" + pDay + "' AND pMonth='" +
-                    pMonth + "' AND pYear='" + pYear +
+                    "' , pDay='" + pDay + "' , pMonth='" +
+                    pMonth + "' , pYear='" + pYear +
                     "' WHERE bookID='" + bookID + "'");
 	}
 
@@ -302,9 +320,9 @@ public class BookSearch {
 	public void modifyAuthor(String fName, String mName, String lName,
             int bDay, int bMonth, int bYear, int authorID) throws SQLException {
 		stat.execute("UPDATE AUTHOR SET fName='" + fName +
-                    "' AND mName='" + mName + "' AND lName='" +
-                    lName + "' AND bDay='" + bDay +
-                    "' AND bMonth='" + bMonth + "' AND bYear='" +
+                    "' , mName='" + mName + "' , lName='" +
+                    lName + "' , bDay='" + bDay +
+                    "' , bMonth='" + bMonth + "' , bYear='" +
                     bYear + "' WHERE bookID='" + authorID + "'");
 	}
 	

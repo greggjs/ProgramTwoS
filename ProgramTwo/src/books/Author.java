@@ -15,7 +15,7 @@ public class Author implements Comparable<Author>	{
 
 	private String fName, mName, lName;
 	private int bMonth, bDay, bYear;
-	private int authorID;
+	public int authorID;
 
 	public Author(String fName, String mName, String lName, int bDay, int bMonth, int bYear, int authorID)	{
 		this.fName = fName;

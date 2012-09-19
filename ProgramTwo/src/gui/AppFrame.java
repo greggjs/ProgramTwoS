@@ -31,10 +31,10 @@ public class AppFrame extends javax.swing.JFrame {
 			search = new BookSearch("Project2.db");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(this,"Cannot use sqlite");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// TODO Auto-generated catch block\
+			JOptionPane.showMessageDialog(this,"Cannot connect to database");
 		}
         initComponents();
     }
@@ -284,7 +284,6 @@ public class AppFrame extends javax.swing.JFrame {
 					goButtonActionPerformed(evt);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
             }
         });
@@ -545,12 +544,12 @@ public class AppFrame extends javax.swing.JFrame {
     	
         switch (actionPerformed) {
                 case searchAuthor :
-                    outputBox.setText(search.authorsToString(search.searchAuthor(aFName, aMName,aLName, aBDay,
-                                    aBMonth, aBYear, authorID)));
+                    outputBox.setText(search.searchAuthor(aFName, aMName,aLName, aBDay,
+                                    aBMonth, aBYear, authorID));
                     break;
                 case searchBook :
-                    outputBox.setText(search.booksToString(search.searchBook(bTitle, bPDay,
-                                    bPMonth, bPYear, bookID)));
+                    outputBox.setText(search.searchBook(bTitle, bPDay,
+                                    bPMonth, bPYear, bookID));
                     break;
                 case addBook :
                 	try{
@@ -558,10 +557,8 @@ public class AppFrame extends javax.swing.JFrame {
 	                                    		Integer.parseInt(bookID),Integer.parseInt(authorID));
 	                    outputBox.setText("");
                 	}catch(SQLException e)	{
-                		e.printStackTrace();
                 		JOptionPane.showMessageDialog(this, "SQL ERROR!\nIs the Book ID already in use?");
                 	}catch(NumberFormatException e)	{
-                		e.printStackTrace();
                 		JOptionPane.showMessageDialog(this,"Some of your numbers aren't numbers...");
                 	}
                     break;
@@ -571,7 +568,6 @@ public class AppFrame extends javax.swing.JFrame {
 	                    		Integer.parseInt(aBYear));
 	                    outputBox.setText("");
                 	} catch(SQLException e)	{
-                		e.printStackTrace();
                 		JOptionPane.showMessageDialog(this, "SQL ERROR!\n Is the Author ID already in use?");
                 	}
                     break;
@@ -581,7 +577,6 @@ public class AppFrame extends javax.swing.JFrame {
 	                            Integer.parseInt(bookID));
 	                    outputBox.setText("");
                 	}catch(NumberFormatException e)	{
-                		e.printStackTrace();
                 		JOptionPane.showMessageDialog(this, "Some of your numbers aren't numbers...");
                 	}
                     break;
@@ -591,7 +586,6 @@ public class AppFrame extends javax.swing.JFrame {
 	                            Integer.parseInt(authorID));
 	                    outputBox.setText("");
 	               	}catch(NumberFormatException e)	{
-                		e.printStackTrace();
                 		JOptionPane.showMessageDialog(this, "Some of your numbers aren't numbers...");                		
                 	}
                     break;
@@ -603,7 +597,6 @@ public class AppFrame extends javax.swing.JFrame {
 	                    search.removeBook(Integer.parseInt(bookID));
 	                    outputBox.setText("");
                 	}catch(NumberFormatException e)	{
-                		e.printStackTrace();
                 		JOptionPane.showMessageDialog(this, "Some of your numbers aren't numbers...");                		
                 	}
                     break;
