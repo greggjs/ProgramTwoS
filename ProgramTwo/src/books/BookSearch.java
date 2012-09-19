@@ -82,9 +82,10 @@ public class BookSearch {
 	 * @throws SQLException Database has too many Books. Auto-increment has reached 
 	 * the highest possible integer.
 	 */
-	public void addBook(String title, int pDayOfMonth, int pMonth, int pYear) throws SQLException {
+	public void addBook(String title, int pDayOfMonth, int pMonth, int pYear,int bookID, int authorID) throws SQLException {
 		stat.execute("INSERT INTO BOOK VALUES ('" + title +	"', " + pDayOfMonth + ", " 
-				+ pMonth + ", " + pYear + ", NULL);");
+				+ pMonth + ", " + pYear + ", " + bookID + ")");
+		stat.execute("INSERT INTO AUTHORED VALUES (" + bookID + "," + authorID + ")");
 	}
 
 	/**

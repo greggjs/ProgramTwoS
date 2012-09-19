@@ -511,41 +511,73 @@ public class AppFrame extends javax.swing.JFrame {
      //   String aFName, aMName, aLName, bTitle;
      //   int aBDay, aBMonth, aBYear, bPDay, bPMonth, bPYear;        
  
+    	String aFName = firstNameField.getText().trim();
+    	String aMName = midNameField.getText().trim();
+    	String aLName = lastNameField.getText().trim();
+    	String bTitle = bookTitleField.getText().trim();
+    	String aBDay = birthDayField.getText().trim();
+    	String aBMonth = birthMonthField.getText().trim();
+    	String aBYear = birthYearField.getText().trim();
+    	String authorID = authorIDField.getText().trim();
+    	String bPDay = pubDayField.getText().trim();
+    	String bPMonth = pubMonthField.getText().trim();
+    	String bPYear = pubYearField.getText().trim();
+    	String bookID = bookIDField.getText().trim();
+    	
+    	if (aBDay.equals("") || aBMonth.equals("") || aBYear.equals(""))	{
+    		int checkDay = (aBDay.equals("")) ? 1 : Integer.parseInt(aBDay);
+    		int checkMonth = (aBMonth.equals("")) ? 1 : Integer.parseInt(aBMonth);
+    		int checkYear = (aBYear.equals("")) ? 2000 : Integer.parseInt(aBYear);
+    		if (!BookSearch.checkDate(checkDay,checkMonth,checkYear))	{
+    			JOptionPane.showMessageDialog(this,"Birthdate is not valid!");
+    			return;
+    		}
+    	}
+    	if (bPDay.equals("") || bPMonth.equals("") || bPYear.equals(""))	{
+    		int checkDay = (bPDay.equals("")) ? 1 : Integer.parseInt(bPDay);
+    		int checkMonth = (bPMonth.equals("")) ? 1 : Integer.parseInt(bPMonth);
+    		int checkYear = (bPYear.equals("")) ? 2000 : Integer.parseInt(bPYear);
+    		if (!BookSearch.checkDate(checkDay,checkMonth,checkYear))	{
+    			JOptionPane.showMessageDialog(this,"Publish date is not valid!");
+    			return;
+    		}    		
+    	}
+    	
         switch (actionPerformed) {
                 case searchAuthor :
-                    outputBox.setText(search.authorsToString(search.searchAuthor(firstNameField.getText(), midNameField.getText(),
-                                    lastNameField.getText(), birthDayField.getText(),
-                                    birthMonthField.getText(), birthYearField.getText(), authorIDField.getText())));
+                    outputBox.setText(search.authorsToString(search.searchAuthor(aFName, aMName,aLName, aBDay,
+                                    aBMonth, aBYear, authorID)));
                     break;
                 case searchBook :
-                    outputBox.setText(search.booksToString(search.searchBook(bookTitleField.getText(), pubDayField.getText(),
-                                    pubMonthField.getText(), pubYearField.getText(), bookIDField.getText())));
+                    outputBox.setText(search.booksToString(search.searchBook(bTitle, bPDay,
+                                    bPMonth, bPYear, bookID)));
                     break;
                 case addBook :
-                    search.addBook(bookTitleField.getText(), Integer.parseInt(pubDayField.getText().trim()),
-                                    Integer.parseInt(pubMonthField.getText().trim()), Integer.parseInt(pubYearField.getText().trim()));
+                    search.addBook(bTitle, Integer.parseInt(bPDay), Integer.parseInt(bPMonth), Integer.parseInt(bPYear),
+                                    		Integer.parseInt(bookID),Integer.parseInt(authorID));
+                    outputBox.setText("");
                     break;
                 case addAuthor :
-                    search.addAuthor(firstNameField.getText(), midNameField.getText(),
-                                    lastNameField.getText(), Integer.parseInt(birthDayField.getText().trim()),
-                                    Integer.parseInt(birthMonthField.getText().trim()), Integer.parseInt(birthYearField.getText().trim()));
+                    search.addAuthor(aFName, aMName, aLName, Integer.parseInt(aBDay), Integer.parseInt(aBMonth), 
+                    		Integer.parseInt(aBYear));
+                    outputBox.setText("");
                     break;
                 case modifyBook :
-                	search.modifyBook(bookTitleField.getText(), Integer.parseInt(pubDayField.getText().trim()),
-                            Integer.parseInt(pubMonthField.getText().trim()), Integer.parseInt(pubYearField.getText().trim()),
-                            Integer.parseInt(bookIDField.getText().trim()));
+                	search.modifyBook(bTitle, Integer.parseInt(bPDay), Integer.parseInt(bPMonth), Integer.parseInt(bPYear),
+                            Integer.parseInt(bookID));
+                    outputBox.setText("");
                     break;
                 case modifyAuthor :
-                    search.modifyAuthor(firstNameField.getText(), midNameField.getText(),
-                    		lastNameField.getText(), Integer.parseInt(birthDayField.getText().trim()),
-                    		Integer.parseInt(birthMonthField.getText().trim()), Integer.parseInt(birthYearField.getText().trim()),
-                            Integer.parseInt(authorIDField.getText().trim()));
+                    search.modifyAuthor(aFName, aMName, aLName, Integer.parseInt(aBDay), Integer.parseInt(aBMonth), Integer.parseInt(aBYear),
+                            Integer.parseInt(authorID));
+                    outputBox.setText("");
                     break;
                 case searchKeyword :
-                	outputBox.setText(search.searchByKeyWord(bookTitleField.getText()));
+                	outputBox.setText(search.searchByKeyWord(bTitle));
                     break;
                 case deleteBook :
-                    search.removeBook(Integer.parseInt(bookIDField.getText()));
+                    search.removeBook(Integer.parseInt(bookID));
+                    outputBox.setText("");
                     break;
             }
        
