@@ -323,7 +323,7 @@ public class BookSearch {
                     "' , mName='" + mName + "' , lName='" +
                     lName + "' , bDay='" + bDay +
                     "' , bMonth='" + bMonth + "' , bYear='" +
-                    bYear + "' WHERE bookID='" + authorID + "'");
+                    bYear + "' WHERE authorID='" + authorID + "'");
 	}
 	
 	 public String authorsToString(ArrayList<Author> authors) throws SQLException{
