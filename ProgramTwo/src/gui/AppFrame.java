@@ -18,7 +18,7 @@ public class AppFrame extends javax.swing.JFrame {
 
     private String aFName, aMName, aLName, bTitle;
     private int aBDay, aBMonth, aBYear, bPDay, bPMonth, bPYear;
-    private int actionPerformed;
+    private int actionPerformed = -1;
     private static final int searchBook = 0, searchAuthor = 1, addBook = 2, addAuthor = 3, 
             modifyBook = 4, modifyAuthor = 5, searchKeyword = 6, deleteBook = 7;
     private BookSearch search;
@@ -589,9 +589,9 @@ public class AppFrame extends javax.swing.JFrame {
                 	try{
 	                    search.addBook(bTitle, Integer.parseInt(bPDay), Integer.parseInt(bPMonth), Integer.parseInt(bPYear),
 	                                    		Integer.parseInt(bookID),Integer.parseInt(authorID));
-	                    outputBox.setText("");
+	                    outputBox.setText("Success");
                 	}catch(SQLException e)	{
-                		JOptionPane.showMessageDialog(this, "SQL ERROR!\nIs the Book ID already in use?");
+                		JOptionPane.showMessageDialog(this, "SQL ERROR!\nIs the Book ID already in use?\nIs the author ID in the database?");
                 	}catch(NumberFormatException e)	{
                 		JOptionPane.showMessageDialog(this,"Some of your numbers aren't numbers...");
                 	}
@@ -600,7 +600,7 @@ public class AppFrame extends javax.swing.JFrame {
                 	try{
 	                    search.addAuthor(aFName, aMName, aLName, Integer.parseInt(aBDay), Integer.parseInt(aBMonth), 
 	                    		Integer.parseInt(aBYear));
-	                    outputBox.setText("");
+	                    outputBox.setText("Success");
                 	} catch(SQLException e)	{
                 		JOptionPane.showMessageDialog(this, "SQL ERROR!\n Is the Author ID already in use?");
                 	}
@@ -609,7 +609,7 @@ public class AppFrame extends javax.swing.JFrame {
                 	try{
 	                	search.modifyBook(bTitle, Integer.parseInt(bPDay), Integer.parseInt(bPMonth), Integer.parseInt(bPYear),
 	                            Integer.parseInt(bookID));
-	                    outputBox.setText("");
+	                    outputBox.setText("Success");
                 	}catch(NumberFormatException e)	{
                 		JOptionPane.showMessageDialog(this, "Some of your numbers aren't numbers...");
                 	}
@@ -618,7 +618,7 @@ public class AppFrame extends javax.swing.JFrame {
                 	try{
 	                    search.modifyAuthor(aFName, aMName, aLName, Integer.parseInt(aBDay), Integer.parseInt(aBMonth), Integer.parseInt(aBYear),
 	                            Integer.parseInt(authorID));
-	                    outputBox.setText("");
+	                    outputBox.setText("Success");
 	               	}catch(NumberFormatException e)	{
                 		JOptionPane.showMessageDialog(this, "Some of your numbers aren't numbers...");                		
                 	}
@@ -629,11 +629,14 @@ public class AppFrame extends javax.swing.JFrame {
                 case deleteBook :
                 	try{
 	                    search.removeBook(Integer.parseInt(bookID));
-	                    outputBox.setText("");
+	                    outputBox.setText("Success");
                 	}catch(NumberFormatException e)	{
                 		JOptionPane.showMessageDialog(this, "Some of your numbers aren't numbers...");                		
                 	}
                     break;
+                default :
+                	JOptionPane.showMessageDialog(null, "Please select an option.");
+                	break;
             }
     }//GEN-LAST:event_goButtonActionPerformed
 
@@ -703,6 +706,7 @@ public class AppFrame extends javax.swing.JFrame {
 
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpButtonActionPerformed
         // TODO add your handling code here:
+    	help();
     }//GEN-LAST:event_helpButtonActionPerformed
 
     private void clearFormButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearFormButtonActionPerformed
@@ -724,37 +728,6 @@ public class AppFrame extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AppFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AppFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AppFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AppFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AppFrame().setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton addAuthorButton;
     private javax.swing.JRadioButton addBookButton;
@@ -805,4 +778,24 @@ public class AppFrame extends javax.swing.JFrame {
     private javax.swing.JRadioButton searchBooksButton;
     private javax.swing.JRadioButton searchKeywordButton;
     // End of variables declaration//GEN-END:variables
+    public static void help() {
+        JOptionPane.showMessageDialog(null, "Select one of the eight radio buttons to perform a search.\n" +
+                "\nSearch Books:\n Find books in the database matching input given by the specified fields. if\n" +
+                " all fields are empty, it returns all books with corresponding authors.\nSearch Authors:\n Find" +
+                " all authors in the database matching the input given by the specified fields. If all fields\n" +
+                " are empty, then it will list all authors with all of their corresponding books.\nAdd Book:\n" +
+                "Insert a book into the database with all fields filled out except for the author name and birthday.\n" +
+                " Book ID must be unique and Author ID must correspond to an existing author. Required fields are\n" +
+                "Book ID and Author ID.\nAdd Author:\n Insert an author into the database with a name and birthday.\n" +
+                "There should be no input for Author ID.\nModify Book:\nChange the data of an existing book in the\n" +
+                " database, with specifying the Book ID required. It modifies the book indicated by Book ID input by\n" +
+                " the user.\nModify Author:\nChange the data of an existing author in the database, with specifying\n" +
+                " the Author ID required. Modifies the author indicated by Author ID input by user.\nSearch By Keyword:\n" +
+                "Returns all books with titles containing the string specified by the user in the Title field.\nDelete Book:\n" +
+                "Deletes the book specified by the Book ID given by the user in the Book ID field.\n\nBy default, the" +
+                "application will search books if no radio button is selected. To perform an action, first select the \n" +
+                "appropriate command and click the \"Go\" button. Results will appear below the radio button in the\n" +
+                "text area. To clear queries quickly, click the \"Clear Form\" button.", "Help",
+                JOptionPane.INFORMATION_MESSAGE, null);
+    }
 }

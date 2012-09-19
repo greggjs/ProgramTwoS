@@ -1,3 +1,7 @@
+/**
+ * @author Kyle Rogers, Shannon Kirby, Jake Gregg
+ */
+
 import books.BookSearch;
 import gui.*;
 
